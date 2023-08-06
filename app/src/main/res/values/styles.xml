@@ -23,8 +23,6 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@color/gray2</item>
-        <item name="colorOnPrimary">@color/blue_dark</item>
         <item name="android:fontFamily">@font/roboto_slab_regular</item>
         <item name="android:textColor">@color/blue_dark</item>
     </style>
