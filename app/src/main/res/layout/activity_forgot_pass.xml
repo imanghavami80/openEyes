@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue_dark"
+        tools:context=".view.activities.ForgotPassActivity">
+
+        <View
+            android:id="@+id/viewForgotPass1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white_light"
+            app:layout_constraintBottom_toTopOf="@id/constLayoutForgotPass1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="0.05" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayoutForgotPass1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white_light"
+            app:layout_constraintBottom_toTopOf="@id/constLayoutForgotPass2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewForgotPass1"
+            app:layout_constraintVertical_weight="0.1">
+
+            <TextView
+                android:id="@+id/txtForgotPassword1"
+                style="@style/form_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset_password"
+                app:layout_constraintBottom_toTopOf="@+id/txtForgotPassword2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/txtForgotPassword2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab_regular"
+                android:text="@string/forgot_password_related"
+                android:textColor="@color/gray1"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayoutForgotPass2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/shape_round_bottom"
+            app:layout_constraintBottom_toTopOf="@id/constLayoutForgotPass3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constLayoutForgotPass1"
+            app:layout_constraintVertical_weight="0.75">
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--There are two layout designed in this part...-->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constLayoutSendLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtForgotPassword3"
+                            style="@style/normal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/forgot_password_hint_1"
+                            android:textColor="@color/blue_dark"
+                            app:layout_constraintBottom_toTopOf="@+id/txtLayoutForgotPasswordEmail"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            app:layout_constraintWidth_percent="0.9" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/txtLayoutForgotPasswordEmail"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:hint="@string/enter_email_hint"
+                            android:textColorHint="@color/blue_dark_80"
+                            app:errorEnabled="true"
+                            app:hintTextColor="@color/blue_dark"
+                            app:layout_constraintBottom_toTopOf="@+id/txtForgotPassword4"
+                            app:layout_constraintEnd_toEndOf="@+id/txtForgotPassword3"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/txtForgotPassword3"
+                            app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword3"
+                            app:layout_constraintWidth_percent="0.9"
+                            app:startIconDrawable="@drawable/svg_email"
+                            app:startIconTint="@color/blue_dark_80">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edtForgotPasswordEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_slab_light"
+                                android:inputType="textEmailAddress"
+                                android:textColor="@color/blue_dark"
+                                app:boxStrokeColor="@color/blue_semi_dark" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/txtForgotPassword4"
+                            style="@style/normal"
+                            android:layout_width="370dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/forgot_password_hint_2"
+                            android:textColor="@color/blue_dark"
+                            app:layout_constraintBottom_toTopOf="@+id/btnSendLink"
+                            app:layout_constraintEnd_toEndOf="@+id/txtLayoutForgotPasswordEmail"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/txtLayoutForgotPasswordEmail"
+                            app:layout_constraintTop_toBottomOf="@+id/txtLayoutForgotPasswordEmail" />
+
+                        <Button
+                            android:id="@+id/btnSendLink"
+                            style="@style/FilledButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_50sdp"
+                            android:text="@string/send_link"
+                            app:backgroundTint="@color/blue_dark"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/txtForgotPassword4"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/txtForgotPassword4"
+                            app:layout_constraintTop_toBottomOf="@+id/txtForgotPassword4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--<androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constLayoutResetPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/txtLayoutResetPassword1"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/enter_new_password_hint"
+                            android:textColorHint="@color/blue_dark_80"
+                            app:endIconMode="password_toggle"
+                            app:endIconTint="@color/blue_dark_80"
+                            app:errorEnabled="true"
+                            app:hintTextColor="@color/blue_dark"
+                            app:layout_constraintBottom_toTopOf="@+id/txtLayoutResetPassword2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            app:layout_constraintWidth_percent="0.9"
+                            app:startIconDrawable="@drawable/svg_lock"
+                            app:startIconTint="@color/blue_dark_80">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edtResetPassword1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_slab_light"
+                                android:inputType="textPassword"
+                                android:textColor="@color/blue_dark"
+                                app:boxStrokeColor="@color/blue_semi_dark" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/txtLayoutResetPassword2"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/confirm_new_password_hint"
+                            android:textColorHint="@color/blue_dark_80"
+                            app:endIconMode="password_toggle"
+                            app:endIconTint="@color/blue_dark_80"
+                            app:errorEnabled="true"
+                            app:hintTextColor="@color/blue_dark"
+                            app:layout_constraintBottom_toTopOf="@+id/btnResetPassword"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtLayoutResetPassword1"
+                            app:layout_constraintWidth_percent="0.9"
+                            app:startIconDrawable="@drawable/svg_lock"
+                            app:startIconTint="@color/blue_dark_80">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edtResetPassword2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_slab_light"
+                                android:inputType="textPassword"
+                                android:textColor="@color/blue_dark"
+                                app:boxStrokeColor="@color/blue_semi_dark" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/btnResetPassword"
+                            style="@style/FilledButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_50sdp"
+                            android:text="@string/reset"
+                            app:backgroundTint="@color/blue_dark"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/txtLayoutResetPassword2"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/txtLayoutResetPassword2"
+                            app:layout_constraintTop_toBottomOf="@+id/txtLayoutResetPassword2" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayoutForgotPass3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constLayoutForgotPass2"
+            app:layout_constraintVertical_weight="0.1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab_black"
+                android:text="@string/app_name"
+                android:textColor="@color/white_light"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBarForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/blue_semi_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

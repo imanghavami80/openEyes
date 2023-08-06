@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homePage"
+        android:enabled="true"
+        android:icon="@drawable/svg_home"
+        android:title="@string/home"/>
+
+    <item
+        android:id="@+id/addReportPage"
+        android:enabled="true"
+        android:icon="@drawable/svg_add"
+        android:title="@string/add_report"/>
+
+    <item
+        android:id="@+id/profilePage"
+        android:enabled="true"
+        android:icon="@drawable/svg_profile"
+        android:title="@string/profile"/>
+
+</menu>
