@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.homePage) {
                     fragment = new HomeFragment();
 
-                } else if (item.getItemId() == R.id.addReportPage) {
+                } else if (item.getItemId() == R.id.addDefectPage) {
                     fragment = new AddReportFragment();
 
                 } else if (item.getItemId() == R.id.profilePage) {

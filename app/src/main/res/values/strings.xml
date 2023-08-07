@@ -25,7 +25,7 @@
     <string name="reset_link_sent">The reset link has been sent to your email.</string>
     <string name="hide">HIDE</string>
     <string name="home">Home</string>
-    <string name="add_report">Add Report</string>
+    <string name="add_defect">Add Defect</string>
     <string name="profile">Profile</string>
     <string name="error">ERROR.  </string>
     <string name="error_occurred">An error occurred. please try again later.</string>

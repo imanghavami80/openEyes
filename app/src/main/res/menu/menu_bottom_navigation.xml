@@ -8,10 +8,10 @@
         android:title="@string/home"/>
 
     <item
-        android:id="@+id/addReportPage"
+        android:id="@+id/addDefectPage"
         android:enabled="true"
         android:icon="@drawable/svg_add"
-        android:title="@string/add_report"/>
+        android:title="@string/add_defect"/>
 
     <item
         android:id="@+id/profilePage"
