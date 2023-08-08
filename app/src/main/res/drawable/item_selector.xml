@@ -7,6 +7,6 @@
     <item android:state_pressed="true"
         android:color="@color/blue_dark"/>
 
-    <item android:color="@color/blue_dark_50"/>
+    <item android:color="@color/gray3"/>
 
 </selector>
