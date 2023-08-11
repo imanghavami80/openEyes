@@ -4,6 +4,11 @@ public class Constants {
     // Splash timer
     public static final long SPLASH_DISPLAY_LENGTH = 2000;
 
+    // Permissions
+    public static final int PERMISSIONS_REQUEST_CODE = 1;
+    public static final int REQUEST_CHECK_SETTINGS = 2;
+
+
     // Shared preferences
     public static final String PREF_NAME  = "MyAppPreferences";
     public static final String PREF_KEY_USER_EMAIL = "userEmail";
