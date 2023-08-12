@@ -23,10 +23,13 @@
     <string name="send_link">Send Link</string>
     <string name="reset">Reset</string>
     <string name="reset_link_sent">The reset link has been sent to your email.</string>
+    <string name="need_permission">Permission needed for this feature.</string>
     <string name="hide">HIDE</string>
+    <string name="enable">Enable</string>
     <string name="home">Home</string>
     <string name="add_defect">Add Defect</string>
     <string name="profile">Profile</string>
+    <string name="gps_not_enable">Please enable GPS first.</string>
     <string name="error">ERROR.  </string>
     <string name="error_occurred">An error occurred. please try again later.</string>
     <string name="error_empty_field">This field can\'t be empty</string>

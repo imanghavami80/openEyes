@@ -2,7 +2,11 @@ package com.example.openeyes.utility;
 
 import android.Manifest;
 import android.app.Activity;
+
 import androidx.fragment.app.Fragment;
+
+import com.example.openeyes.R;
+
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class PermissionManager {
@@ -51,7 +55,7 @@ public class PermissionManager {
         if (this.activity != null) {
             EasyPermissions.requestPermissions(
                     this.activity,
-                    "Permission needed for this feature.",
+                    this.activity.getString(R.string.need_permission),
                     Constants.PERMISSIONS_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
@@ -60,15 +64,13 @@ public class PermissionManager {
         } else if (this.fragment != null) {
             EasyPermissions.requestPermissions(
                     this.fragment,
-                    "Permission needed for this feature.",
+                    this.fragment.getString(R.string.need_permission),
                     Constants.PERMISSIONS_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
             );
 
         }
-
-
 
     }
 

@@ -29,17 +29,50 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <org.osmdroid.views.MapView
-            android:id="@+id/mapViewHome"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_marginBottom="@dimen/_70sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewHome"
-            android:layout_marginBottom="@dimen/_70sdp"/>
+            app:layout_constraintTop_toBottomOf="@id/cardViewHome">
+
+            <org.osmdroid.views.MapView
+                android:id="@+id/mapViewHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewHomeGps"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/blue_dark"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_3sdp"
+                app:layout_constraintBottom_toBottomOf="@id/mapViewHome"
+                app:layout_constraintEnd_toEndOf="@id/mapViewHome"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="@id/mapViewHome"
+                app:layout_constraintTop_toTopOf="@id/mapViewHome"
+                app:layout_constraintVertical_bias="0">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/blue_dark"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/svg_my_location" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
