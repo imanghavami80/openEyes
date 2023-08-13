@@ -14,9 +14,9 @@ import com.example.openeyes.databinding.ActivitySignInBinding;
 import com.example.openeyes.model.User;
 import com.example.openeyes.utility.Constants;
 import com.example.openeyes.utility.MySharedPreferences;
+import com.example.openeyes.utility.SnackBarHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -119,23 +119,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void showSnackBar(String message) {
-        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG);
-
-        snackbar.setAction(getString(R.string.hide), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snackbar.dismiss();
-
-                    }
-                })
-                .setActionTextColor(getColor(R.color.blue_semi_dark))
-                .setTextColor(getColor(R.color.blue_dark))
-                .setBackgroundTint(getColor(R.color.gray2))
-                .show();
-
-    }
-
     private void handleError() {
         binding.edtSignInEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -232,7 +215,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                showSnackBar(getString(R.string.error_occurred));
+                                SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
                                 binding.progressBarSignIn.setVisibility(View.GONE);
 
                             }
@@ -241,10 +224,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     } else {
                         Exception exception = task.getException();
                         if (exception instanceof FirebaseNetworkException) {
-                            showSnackBar(getString(R.string.error_occurred));
+                            SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
 
                         } else {
-                            showSnackBar(getString(R.string.error_wrong_user_info));
+                            SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_wrong_user_info));
 
                         }
 

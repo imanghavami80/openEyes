@@ -11,9 +11,9 @@ import android.util.Patterns;
 import android.view.View;
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivityForgotPassBinding;
+import com.example.openeyes.utility.SnackBarHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
@@ -76,23 +76,6 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void showSnackBar(String message) {
-        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG);
-
-        snackbar.setAction(getString(R.string.hide), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snackbar.dismiss();
-
-                    }
-                })
-                .setActionTextColor(getColor(R.color.blue_semi_dark))
-                .setTextColor(getColor(R.color.blue_dark))
-                .setBackgroundTint(getColor(R.color.gray2))
-                .show();
-
-    }
-
     private void handleError() {
         binding.edtForgotPasswordEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,17 +117,17 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        showSnackBar(getString(R.string.reset_link_sent));
+                        SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.reset_link_sent));
                         binding.progressBarForgotPassword.setVisibility(View.GONE);
 
                     } else {
                         Exception exception = task.getException();
                         if (exception instanceof FirebaseNetworkException) {
-                            showSnackBar(getString(R.string.error_occurred));
+                            SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
                             binding.progressBarForgotPassword.setVisibility(View.GONE);
 
                         } else {
-                            showSnackBar(getString(R.string.error_reset_link_not_sent));
+                            SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_reset_link_not_sent));
                             binding.progressBarForgotPassword.setVisibility(View.GONE);
 
                         }

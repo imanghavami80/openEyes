@@ -2,35 +2,29 @@ package com.example.openeyes.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.FragmentHomeBinding;
 import com.example.openeyes.utility.PermissionManager;
-import com.google.android.material.snackbar.Snackbar;
-
+import com.example.openeyes.utility.SnackBarHandler;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.Marker;
-
 import java.util.List;
-
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -38,14 +32,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private FragmentHomeBinding binding;
     private PermissionManager permissionManager;
-    private double latitude, longitude;
+    private static double latitude, longitude = 0.0;
+    private IMapController mapController;
+    private Marker userLocationMarker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Context ctx = requireContext();
-        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        Context context = requireContext();
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
 
     }
 
@@ -83,9 +79,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             permissionManager.requestLocationPermissions();
         }
 
+        // Initialize the map.
         binding.mapViewHome.setTileSource(TileSourceFactory.MAPNIK);
         binding.mapViewHome.setMultiTouchControls(true);
         binding.mapViewHome.setBuiltInZoomControls(false);
+
+        // Set a random location on map for first view.
+        mapController = binding.mapViewHome.getController();
+        mapController.setZoom(11.0);
+        mapController.setCenter(new GeoPoint(35.7443, 51.4435));
+
+        // TODO: Show all reported defects locations on map with red marker.
 
         return binding.getRoot();
 
@@ -96,25 +100,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        // this will refresh the osmdroid configuration on resuming.
-        // if you make changes to the configuration, use
-        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        // Configuration.getInstance().load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()));
-        binding.mapViewHome.onResume(); // Needed for compass, my location overlays, v6.0.0 and up
 
+        if (latitude != 0.0 && longitude != 0.0) {
+            mapController = binding.mapViewHome.getController();
+            mapController.setZoom(18.0);
+            GeoPoint startPoint = new GeoPoint(latitude, longitude);
+            mapController.setCenter(startPoint);
+
+            binding.mapViewHome.getOverlays().remove(userLocationMarker);
+
+            userLocationMarker = new Marker(binding.mapViewHome);
+            userLocationMarker.setPosition(new GeoPoint(latitude, longitude));
+            userLocationMarker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_current_location));
+            binding.mapViewHome.getOverlays().add(userLocationMarker);
+
+        }
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // this will refresh the osmdroid configuration on resuming.
-        // if you make changes to the configuration, use
-        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        // Configuration.getInstance().save(requireContext(), prefs);
-        binding.mapViewHome.onPause(); // Needed for compass, my location overlays, v6.0.0 and up
-
-    }
-
 
     @SuppressLint("MissingPermission")
     @Override
@@ -129,21 +130,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
 
-                        IMapController mapController = binding.mapViewHome.getController();
-                        mapController.setZoom(20.0);
-                        GeoPoint startPoint = new GeoPoint(latitude, longitude);
-                        mapController.setCenter(startPoint);
+                        mapController = binding.mapViewHome.getController();
+                        mapController.setZoom(18.0);
+                        mapController.setCenter(new GeoPoint(latitude, longitude));
 
-                        Marker marker = new Marker(binding.mapViewHome);
-                        marker.setPosition(new GeoPoint(latitude, longitude));
-                        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-                        binding.mapViewHome.getOverlays().add(marker);
+                        binding.mapViewHome.getOverlays().remove(userLocationMarker);
+
+                        userLocationMarker = new Marker(binding.mapViewHome);
+                        userLocationMarker.setPosition(new GeoPoint(latitude, longitude));
+                        userLocationMarker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_current_location));
+                        binding.mapViewHome.getOverlays().add(userLocationMarker);
 
                     }
                 });
 
             } else {
-                showSnackBar(requireContext().getString(R.string.gps_not_enable));
+                SnackBarHandler.snackBarEnableGpsAction(
+                        requireContext(),
+                        binding.getRoot(),
+                        requireContext().getString(R.string.gps_not_enable)
+                );
 
             }
 
@@ -153,29 +159,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public boolean isGpsEnable() {
         LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-    }
-
-    private void showSnackBar(String message) {
-        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG);
-
-        snackbar.setAction(getString(R.string.enable), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        goToGpsSetting();
-
-                    }
-                })
-                .setActionTextColor(requireContext().getColor(R.color.blue_semi_dark))
-                .setTextColor(requireContext().getColor(R.color.blue_dark))
-                .setBackgroundTint(requireContext().getColor(R.color.gray2))
-                .show();
-
-    }
-
-    private void goToGpsSetting() {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(intent);
 
     }
 

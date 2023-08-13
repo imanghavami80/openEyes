@@ -13,9 +13,9 @@ import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivitySignUpBinding;
 import com.example.openeyes.model.User;
 import com.example.openeyes.utility.MySharedPreferences;
+import com.example.openeyes.utility.SnackBarHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
@@ -140,23 +140,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return true;
 
         }
-    }
-
-    private void showSnackBar(String message) {
-        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG);
-
-        snackbar.setAction(getString(R.string.hide), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snackbar.dismiss();
-
-                    }
-                })
-                .setActionTextColor(getColor(R.color.blue_semi_dark))
-                .setTextColor(getColor(R.color.blue_dark))
-                .setBackgroundTint(getColor(R.color.gray2))
-                .show();
-
     }
 
     private void handleError() {
@@ -330,7 +313,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                             goToHomeActivity();
 
                                                         } else {
-                                                            showSnackBar(getString(R.string.error_occurred));
+                                                            SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
                                                             binding.progressBarSignUp.setVisibility(View.GONE);
 
                                                         }
@@ -338,7 +321,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                 });
 
                                             } else {
-                                                showSnackBar(getString(R.string.error_occurred));
+                                                SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
                                                 binding.progressBarSignUp.setVisibility(View.GONE);
 
                                             }
@@ -346,28 +329,27 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     });
 
                                 } else {
-                                    showSnackBar(getString(R.string.error_user_exist));
+                                    SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_user_exist));
                                     binding.progressBarSignUp.setVisibility(View.GONE);
 
                                 }
 
                             } else {
-                                showSnackBar(getString(R.string.error_occurred));
+                                SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
                                 binding.progressBarSignUp.setVisibility(View.GONE);
 
                             }
-
 
                         }
                     });
 
                 } else {
-                    showSnackBar(getString(R.string.error_accept_term));
+                    SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_accept_term));
 
                 }
 
             } else {
-                showSnackBar(getString(R.string.error_password_not_same));
+                SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_password_not_same));
 
             }
         }
