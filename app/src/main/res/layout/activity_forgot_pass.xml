@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_slab_regular"
                 android:text="@string/forgot_password_related"
-                android:textColor="@color/gray1"
+                android:textColor="@color/gray1_80"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

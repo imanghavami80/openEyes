@@ -26,8 +26,8 @@
     <string name="need_permission">Permission needed for this feature.</string>
     <string name="hide">HIDE</string>
     <string name="enable">Enable</string>
-    <string name="home">Home</string>
-    <string name="add_defect">Add Defect</string>
+    <string name="map">Map</string>
+    <string name="defects">Defects</string>
     <string name="profile">Profile</string>
     <string name="gps_not_enable">Please enable GPS first.</string>
     <string name="error">ERROR.  </string>
@@ -42,5 +42,7 @@
     <string name="error_reset_link_not_sent">The reset link was not sent.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="reported_defects">Reported Defects</string>
+    <string name="map_view">Map View</string>
+    <string name="list_view">List View</string>
+    <string name="add_defect">Add Defect</string>
 </resources>

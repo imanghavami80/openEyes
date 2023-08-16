@@ -8,43 +8,55 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivityHomeBinding;
-import com.example.openeyes.view.fragments.AddReportFragment;
-import com.example.openeyes.view.fragments.HomeFragment;
+import com.example.openeyes.view.fragments.DefectsFragment;
+import com.example.openeyes.view.fragments.MapFragment;
 import com.example.openeyes.view.fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ActivityHomeBinding binding;
+    private ActivityHomeBinding binding;
+    private final String mapFragmentTag = "mapFragment";
+    private final String defectsFragmentTag = "defectsFragment";
+    private final String profileFragmentTag = "profileFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.constLayoutHome, new HomeFragment()).commit();
+        Fragment mapFragment = new MapFragment();
+        Fragment defectsFragment = new DefectsFragment();
+        Fragment profileFragment = new ProfileFragment();
+
+        makeCurrentFragment(mapFragment, mapFragmentTag);
 
         binding.bottomNavigationHome.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
+                if (item.getItemId() == R.id.reportedDefectsMapPage) {
+                    makeCurrentFragment(mapFragment, mapFragmentTag);
 
-                if (item.getItemId() == R.id.homePage) {
-                    fragment = new HomeFragment();
-
-                } else if (item.getItemId() == R.id.addDefectPage) {
-                    fragment = new AddReportFragment();
+                } else if (item.getItemId() == R.id.reportedDefectsListPage) {
+                    makeCurrentFragment(defectsFragment, defectsFragmentTag);
 
                 } else if (item.getItemId() == R.id.profilePage) {
-                    fragment = new ProfileFragment();
+                    makeCurrentFragment(profileFragment, profileFragmentTag);
 
                 }
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.constLayoutHome, fragment).commit();
 
                 return true;
 
             }
         });
     }
+
+    private void makeCurrentFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fade_in_new, R.anim.fade_out_new)
+                .replace(R.id.constLayoutHome, fragment, tag)
+                .commit();
+
+    }
+
 }

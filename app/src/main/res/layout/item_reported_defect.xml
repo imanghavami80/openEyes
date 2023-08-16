@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_light">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewReportedDefect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:backgroundTint="@color/white_light_2"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:layout_constraintBottom_toTopOf="@id/viewDefects3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/gray2"
+            app:strokeWidth="1dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10sdp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgReportedDefect"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/png_image_holder"
+                    app:layout_constraintBottom_toTopOf="@+id/txtReportedDefectCategory"
+                    app:layout_constraintEnd_toStartOf="@+id/viewDefects1"
+                    app:layout_constraintHorizontal_weight="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/SpecificCornerRounded" />
+
+                <View
+                    android:id="@+id/viewDefects1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgReportedDefect"
+                    app:layout_constraintEnd_toStartOf="@id/constLayoutReportedDefect1"
+                    app:layout_constraintHorizontal_weight="0.05"
+                    app:layout_constraintStart_toEndOf="@id/imgReportedDefect"
+                    app:layout_constraintTop_toTopOf="@+id/imgReportedDefect" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constLayoutReportedDefect1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgReportedDefect"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="0.45"
+                    app:layout_constraintStart_toEndOf="@+id/viewDefects1"
+                    app:layout_constraintTop_toTopOf="@+id/imgReportedDefect">
+
+                    <com.willy.ratingbar.ScaleRatingBar
+                        android:id="@+id/ratingBarReportedDefect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/txtReportedDefectLikes"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srb_clearRatingEnabled="false"
+                        app:srb_clickable="false"
+                        app:srb_drawableEmpty="@drawable/svg_star_empty"
+                        app:srb_drawableFilled="@drawable/svg_star_fill"
+                        app:srb_isIndicator="false"
+                        app:srb_numStars="4"
+                        app:srb_scrollable="false"
+                        app:srb_starHeight="@dimen/_15sdp"
+                        app:srb_starPadding="0dp"
+                        app:srb_starWidth="@dimen/_15sdp"
+                        app:srb_stepSize="0.1" />
+
+                    <TextView
+                        android:id="@+id/txtReportedDefectLikes"
+                        style="@style/normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="center|start"
+                        app:drawableStartCompat="@drawable/svg_votes"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ratingBarReportedDefect" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/txtReportedDefectCategory"
+                    style="@style/normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:gravity="center|start"
+                    app:drawableStartCompat="@drawable/svg_category"
+                    app:layout_constraintBottom_toTopOf="@+id/txtReportedDefectLocation"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgReportedDefect" />
+
+                <TextView
+                    android:id="@+id/txtReportedDefectLocation"
+                    style="@style/normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:gravity="center|start"
+                    app:drawableStartCompat="@drawable/svg_location"
+                    app:layout_constraintBottom_toTopOf="@+id/viewDefects2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtReportedDefectCategory" />
+
+                <View
+                    android:id="@+id/viewDefects2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:background="@color/gray2"
+                    app:layout_constraintBottom_toTopOf="@id/txtReportedDefectDescription"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtReportedDefectLocation"
+                    app:layout_constraintWidth_percent="0.9" />
+
+                <TextView
+                    android:id="@+id/txtReportedDefectDescription"
+                    style="@style/normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:ellipsize="end"
+                    android:gravity="start|top"
+                    android:maxLines="4"
+                    android:minLines="4"
+                    android:textColor="@color/gray1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/viewDefects2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:id="@+id/viewDefects3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_80sdp"
+            android:background="@color/white_light"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/cardViewReportedDefect"
+            app:layout_constraintStart_toStartOf="@id/cardViewReportedDefect"
+            app:layout_constraintTop_toBottomOf="@id/cardViewReportedDefect" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

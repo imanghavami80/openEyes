@@ -4,19 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constLayoutHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_light"
         tools:context=".view.activities.HomeActivity">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constLayoutHome"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/bottomNavigationHome"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.kwasow.bottomnavigationcircles.BottomNavigationCircles
             android:id="@+id/bottomNavigationHome"
@@ -24,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="start|bottom"
-            android:background="@color/gray2"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/back_bottom_navigation"
             app:circleColor="@color/blue_dark"
             app:elevation="@dimen/_3sdp"
             app:itemIconTint="@drawable/item_selector"
@@ -33,7 +26,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constLayoutHome"
             app:menu="@menu/menu_bottom_navigation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

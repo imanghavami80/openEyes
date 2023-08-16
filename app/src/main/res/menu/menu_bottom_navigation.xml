@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homePage"
+        android:id="@+id/reportedDefectsMapPage"
         android:enabled="true"
-        android:icon="@drawable/svg_home"
-        android:title="@string/home"/>
+        android:icon="@drawable/svg_map"
+        android:title="@string/map"/>
 
     <item
-        android:id="@+id/addDefectPage"
+        android:id="@+id/reportedDefectsListPage"
         android:enabled="true"
-        android:icon="@drawable/svg_add"
-        android:title="@string/add_defect"/>
+        android:icon="@drawable/svg_archive"
+        android:title="@string/defects"/>
 
     <item
         android:id="@+id/profilePage"

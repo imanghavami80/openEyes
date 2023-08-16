@@ -32,4 +32,11 @@
         <item name="android:fontFamily">@font/roboto_slab_regular</item>
         <item name="android:textColor">@color/blue_dark</item>
     </style>
+
+    <style name="SpecificCornerRounded">
+        <item name="cornerSizeTopLeft">@dimen/_20sdp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeBottomRight">@dimen/_20sdp</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
 </resources>

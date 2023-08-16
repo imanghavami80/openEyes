@@ -64,4 +64,7 @@ dependencies {
     // Easy Permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    // Rating Bar
+    implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
+
 }
