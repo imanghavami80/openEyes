@@ -3,9 +3,13 @@
     <string name="company_name">IAAI Challenge Mapping</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+    <string name="submit">Submit</string>
     <string name="sign_up_form_check">I accept the term of use.</string>
     <string name="forgot_password"><u>Forgot password?</u></string>
     <string name="enter_email_hint">E-mail</string>
+    <string name="exact_address">Exact address</string>
+    <string name="defect_description_hint">Anything about the issue…</string>
+    <string name="pick_category">Pick an category</string>
     <string name="enter_password_hint">Password</string>
     <string name="enter_new_password_hint">New password</string>
     <string name="confirm_password_hint">Confirm password</string>
@@ -17,6 +21,7 @@
     <string name="enter_name_hint">Full name</string>
     <string name="enter_nickname_hint">Nickname</string>
     <string name="reset_password">Reset Password</string>
+    <string name="add_defect_hint_1">Report what you have detected in your city to share the problem with others.</string>
     <string name="forgot_password_related">To recover your account!</string>
     <string name="forgot_password_hint_1">Please provide the email address that you used when you signed up for your account.</string>
     <string name="forgot_password_hint_2">We will send you an email that will allow you to reset your password.</string>
@@ -45,4 +50,5 @@
     <string name="map_view">Map View</string>
     <string name="list_view">List View</string>
     <string name="add_defect">Add Defect</string>
+    <string name="upload_photos">Upload photos</string>
 </resources>

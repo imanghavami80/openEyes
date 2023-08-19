@@ -20,6 +20,9 @@
         android:theme="@style/Theme.OpenEyes"
         tools:targetApi="31">
         <activity
+            android:name=".view.activities.AddDefectActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activities.HomeActivity"
             android:exported="false" />
         <activity

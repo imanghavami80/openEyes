@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.activities.AddDefectActivity">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white_light"
+            app:layout_constraintBottom_toTopOf="@id/btnAddDefect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarAddDefect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbarAddDefect"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white_light"
+                    android:elevation="@dimen/_5sdp"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:navigationIcon="@drawable/svg_back"
+                    app:title="@string/add_defect"
+                    app:titleTextColor="@color/blue_dark_80" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedADSalon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appBarAddDefect">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txtAddDefect1"
+                        style="@style/normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:gravity="center"
+                        android:text="@string/add_defect_hint_1"
+                        android:textColor="@color/blue_dark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.9" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtLayoutAddDefectAddress"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:hint="@string/exact_address"
+                        android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/blue_dark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtAddDefect1"
+                        app:layout_constraintWidth_percent="0.9">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtAddDefectAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_120sdp"
+                            android:fontFamily="@font/roboto_slab_light"
+                            android:gravity="top"
+                            android:overScrollMode="never"
+                            android:selectAllOnFocus="true"
+                            android:textColor="@color/blue_dark" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/spinnerAddDefectCategory"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/pick_category"
+                        android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
+                        app:endIconTint="@color/blue_dark_80"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/blue_dark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtLayoutAddDefectAddress"
+                        app:layout_constraintWidth_percent="0.9"
+                        app:startIconDrawable="@drawable/svg_category_2"
+                        app:startIconTint="@color/blue_dark_80">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autoTextAddDefectCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:fontFamily="@font/roboto_slab_light"
+                            android:inputType="text"
+                            android:selectAllOnFocus="true"
+                            android:textColor="@color/blue_dark" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtLayoutAddDefectDescription"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/defect_description_hint"
+                        android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/blue_dark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/spinnerAddDefectCategory"
+                        app:layout_constraintWidth_percent="0.9">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtAddDefectDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_200sdp"
+                            android:fontFamily="@font/roboto_slab_light"
+                            android:gravity="top"
+                            android:overScrollMode="never"
+                            android:selectAllOnFocus="true"
+                            android:textColor="@color/blue_dark" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constLayoutUploadDefectPhoto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_with_dash"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtLayoutAddDefectDescription"
+                        app:layout_constraintWidth_percent="0.9">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerUploadDefectPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layoutDirection="rtl"
+                            android:padding="@dimen/_5sdp"
+                            app:layout_constraintBottom_toTopOf="@id/lineDashADSalon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight="@dimen/_100sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/lineDashADSalon"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:src="@drawable/line_with_dash"
+                            app:layout_constraintBottom_toTopOf="@id/txtBtnUploadDefectPhoto"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/recyclerUploadDefectPhoto" />
+
+
+                        <TextView
+                            android:id="@+id/txtBtnUploadDefectPhoto"
+                            style="@style/normal"
+                            android:layout_width="0dp"
+                            android:layout_height="?attr/actionBarSize"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:text="@string/upload_photos"
+                            android:textColor="@color/blue_semi_dark"
+                            app:autoSizeMaxTextSize="@dimen/_12ssp"
+                            app:autoSizeMinTextSize="@dimen/_3ssp"
+                            app:autoSizeTextType="uniform"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/lineDashADSalon" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constLayoutRecordAudio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/constLayoutUploadDefectPhoto"
+                        app:layout_constraintWidth_percent="0.9">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/lottieAudioWave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_100sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:lottie_autoPlay="true"
+                            app:lottie_colorFilter="@color/blue_dark"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/audio" />
+
+                        <ImageView
+                            android:id="@+id/imgPlayAudio"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:src="@drawable/svg_play"
+                            app:layout_constraintBottom_toBottomOf="@id/imgRecordStopAudio"
+                            app:layout_constraintEnd_toStartOf="@id/imgRecordStopAudio"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/imgRecordStopAudio" />
+
+                        <ImageView
+                            android:id="@+id/imgRecordStopAudio"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginHorizontal="@dimen/_20sdp"
+                            android:src="@drawable/svg_record"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/imgPauseAudio"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toEndOf="@id/imgPlayAudio"
+                            app:layout_constraintTop_toBottomOf="@id/lottieAudioWave" />
+
+                        <ImageView
+                            android:id="@+id/imgPauseAudio"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:src="@drawable/svg_pause"
+                            app:layout_constraintBottom_toBottomOf="@id/imgRecordStopAudio"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/imgRecordStopAudio"
+                            app:layout_constraintTop_toTopOf="@id/imgRecordStopAudio" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/constLayoutRecordAudio" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <Button
+            android:id="@+id/btnAddDefect"
+            style="@style/FilledButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_shape_blue"
+            android:text="@string/submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
