@@ -105,6 +105,20 @@ public class MapFragment extends Fragment implements View.OnClickListener {
 
     /****************************************************/
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.mapViewHome.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.mapViewHome.onResume();
+
+    }
+
     @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {

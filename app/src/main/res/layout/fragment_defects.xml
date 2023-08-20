@@ -9,28 +9,26 @@
         android:background="@color/white_light"
         tools:context=".view.fragments.MapFragment">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewMapBar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarListView"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:backgroundTint="@color/white_light"
-            app:cardElevation="@dimen/_3sdp"
+            android:layout_height="wrap_content"
+            app:elevation="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/gray2"
-            app:strokeWidth="@dimen/_1sdp">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                style="@style/home_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:elevation="@dimen/_15sdp"
-                android:gravity="center"
-                android:text="@string/list_view" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbarMapView"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white_light"
+                android:elevation="@dimen/_5sdp"
+                app:title="@string/list_view"
+                app:titleCentered="true"
+                app:titleTextColor="@color/blue_dark_80" />
 
-        </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -38,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewMapBar">
+            app:layout_constraintTop_toBottomOf="@id/appBarListView">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerDefects"
@@ -59,7 +57,7 @@
                 app:backgroundTint="@color/blue_dark"
                 app:icon="@drawable/svg_add"
                 app:iconTint="@color/white_light"
-                app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"/>
+                app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

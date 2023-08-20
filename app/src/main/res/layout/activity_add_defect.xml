@@ -224,6 +224,17 @@
                             app:lottie_loop="true"
                             app:lottie_rawRes="@raw/audio" />
 
+                        <TextView
+                            android:id="@+id/txtAudioRecorderTime"
+                            style="@style/form_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero_time"
+                            app:layout_constraintTop_toBottomOf="@id/lottieAudioWave"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            />
+
                         <ImageView
                             android:id="@+id/imgPlayAudio"
                             android:layout_width="@dimen/_25sdp"
@@ -240,12 +251,13 @@
                             android:layout_width="@dimen/_60sdp"
                             android:layout_height="@dimen/_60sdp"
                             android:layout_marginHorizontal="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
                             android:src="@drawable/svg_record"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/imgPauseAudio"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintStart_toEndOf="@id/imgPlayAudio"
-                            app:layout_constraintTop_toBottomOf="@id/lottieAudioWave" />
+                            app:layout_constraintTop_toBottomOf="@id/txtAudioRecorderTime" />
 
                         <ImageView
                             android:id="@+id/imgPauseAudio"
@@ -256,7 +268,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/imgRecordStopAudio"
                             app:layout_constraintTop_toTopOf="@id/imgRecordStopAudio" />
-
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

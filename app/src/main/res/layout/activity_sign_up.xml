@@ -90,6 +90,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_name_hint"
                         android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
                         app:errorEnabled="true"
                         app:hintTextColor="@color/blue_dark"
                         app:layout_constraintBottom_toTopOf="@+id/txtLayoutSignUpNickname"
@@ -109,8 +110,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_slab_light"
                             android:maxLength="20"
-                            android:textColor="@color/blue_dark"
-                            app:boxStrokeColor="@color/blue_semi_dark" />
+                            android:textColor="@color/blue_dark" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_nickname_hint"
                         android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
                         app:errorEnabled="true"
                         app:hintTextColor="@color/blue_dark"
                         app:layout_constraintBottom_toTopOf="@+id/txtLayoutSignUpEmail"
@@ -138,8 +139,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_slab_light"
                             android:maxLength="15"
-                            android:textColor="@color/blue_dark"
-                            app:boxStrokeColor="@color/blue_semi_dark" />
+                            android:textColor="@color/blue_dark" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -150,6 +150,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_email_hint"
                         android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
                         app:errorEnabled="true"
                         app:hintTextColor="@color/blue_dark"
                         app:layout_constraintBottom_toTopOf="@+id/txtLayoutSignUpPassword"
@@ -167,8 +168,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_slab_light"
                             android:inputType="textEmailAddress"
-                            android:textColor="@color/blue_dark"
-                            app:boxStrokeColor="@color/blue_semi_dark" />
+                            android:textColor="@color/blue_dark" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -179,6 +179,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_password_hint"
                         android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
                         app:endIconMode="password_toggle"
                         app:endIconTint="@color/blue_dark_80"
                         app:errorEnabled="true"
@@ -199,8 +200,7 @@
                             android:fontFamily="@font/roboto_slab_light"
                             android:inputType="textPassword"
                             android:maxLength="20"
-                            android:textColor="@color/blue_dark"
-                            app:boxStrokeColor="@color/blue_semi_dark" />
+                            android:textColor="@color/blue_dark" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -211,6 +211,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/confirm_password_hint"
                         android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
                         app:endIconMode="password_toggle"
                         app:endIconTint="@color/blue_dark_80"
                         app:errorEnabled="true"
@@ -231,8 +232,7 @@
                             android:fontFamily="@font/roboto_slab_light"
                             android:inputType="textPassword"
                             android:maxLength="20"
-                            android:textColor="@color/blue_dark"
-                            app:boxStrokeColor="@color/blue_semi_dark" />
+                            android:textColor="@color/blue_dark" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

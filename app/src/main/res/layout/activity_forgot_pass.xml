@@ -120,6 +120,7 @@
                             android:layout_marginTop="@dimen/_14sdp"
                             android:hint="@string/enter_email_hint"
                             android:textColorHint="@color/blue_dark_80"
+                            app:boxStrokeColor="@color/blue_semi_dark"
                             app:errorEnabled="true"
                             app:hintTextColor="@color/blue_dark"
                             app:layout_constraintBottom_toTopOf="@+id/txtForgotPassword4"
@@ -137,8 +138,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_slab_light"
                                 android:inputType="textEmailAddress"
-                                android:textColor="@color/blue_dark"
-                                app:boxStrokeColor="@color/blue_semi_dark" />
+                                android:textColor="@color/blue_dark" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 

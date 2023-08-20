@@ -19,9 +19,9 @@ public class SnackBarHandler {
 
                     }
                 })
-                .setActionTextColor(cnx.getColor(R.color.blue_light))
-                .setTextColor(cnx.getColor(R.color.white_light))
-                .setBackgroundTint(cnx.getColor(R.color.blue_dark))
+                .setActionTextColor(cnx.getColor(R.color.blue_semi_dark))
+                .setTextColor(cnx.getColor(R.color.blue_dark))
+                .setBackgroundTint(cnx.getColor(R.color.gray2))
                 .show();
 
     }

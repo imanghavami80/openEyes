@@ -51,4 +51,5 @@
     <string name="list_view">List View</string>
     <string name="add_defect">Add Defect</string>
     <string name="upload_photos">Upload photos</string>
+    <string name="zero_time">00:00</string>
 </resources>
