@@ -5,8 +5,8 @@ public class Constants {
     public static final long SPLASH_DISPLAY_LENGTH = 2000;
 
     // Permissions
-    public static final int PERMISSIONS_REQUEST_CODE = 1;
-    public static final int REQUEST_CHECK_SETTINGS = 2;
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    public static final int RECORD_AUDIO_PERMISSION_REQUEST_CODE = 2;
 
 
     // Shared preferences

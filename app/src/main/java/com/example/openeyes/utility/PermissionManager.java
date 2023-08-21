@@ -56,7 +56,7 @@ public class PermissionManager {
             EasyPermissions.requestPermissions(
                     this.activity,
                     this.activity.getString(R.string.need_permission),
-                    Constants.PERMISSIONS_REQUEST_CODE,
+                    Constants.LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
             );
@@ -65,13 +65,50 @@ public class PermissionManager {
             EasyPermissions.requestPermissions(
                     this.fragment,
                     this.fragment.getString(R.string.need_permission),
-                    Constants.PERMISSIONS_REQUEST_CODE,
+                    Constants.LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
             );
 
         }
+    }
+
+    public boolean hasRecordAudioPermission() {
+        if (this.activity != null) {
+            return EasyPermissions.hasPermissions(
+                    this.activity.getApplicationContext(),
+                    Manifest.permission.RECORD_AUDIO
+            );
+
+        } else if (this.fragment != null) {
+            return EasyPermissions.hasPermissions(
+                    this.fragment.requireContext(),
+                    Manifest.permission.RECORD_AUDIO
+            );
+
+        }
+
+        return false;
 
     }
 
+    public void requestRecordAudioPermission() {
+        if (this.activity != null) {
+            EasyPermissions.requestPermissions(
+                    this.activity,
+                    this.activity.getString(R.string.need_permission),
+                    Constants.RECORD_AUDIO_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.RECORD_AUDIO
+            );
+
+        } else if (this.fragment != null) {
+            EasyPermissions.requestPermissions(
+                    this.fragment,
+                    this.fragment.getString(R.string.need_permission),
+                    Constants.RECORD_AUDIO_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.RECORD_AUDIO
+            );
+
+        }
+    }
 }

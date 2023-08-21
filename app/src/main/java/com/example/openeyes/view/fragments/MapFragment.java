@@ -2,7 +2,6 @@ package com.example.openeyes.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -71,12 +70,9 @@ public class MapFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
                 EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+
             }
         });
-
-        if (!permissionManager.hasLocationPermission()) {
-            permissionManager.requestLocationPermissions();
-        }
 
         // Initialize the map.
         binding.mapViewHome.setTileSource(TileSourceFactory.MAPNIK);
@@ -115,6 +111,11 @@ public class MapFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (!permissionManager.hasLocationPermission()) {
+            permissionManager.requestLocationPermissions();
+        }
+
         binding.mapViewHome.onResume();
 
     }
