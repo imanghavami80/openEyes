@@ -52,4 +52,15 @@
     <string name="add_defect">Add Defect</string>
     <string name="upload_photos">Upload photos</string>
     <string name="zero_time">00:00</string>
+    <string-array name="category">
+        <item>Traffic lights</item>
+        <item>Trees/Shrubs</item>
+        <item>Construction site</item>
+        <item>Cover/Channel</item>
+        <item>Green space/Parks</item>
+        <item>Public lighting</item>
+        <item>Pothole/Road damage</item>
+        <item>Traffic sign</item>
+        <item>Pollution</item>
+    </string-array>
 </resources>

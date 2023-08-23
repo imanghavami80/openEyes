@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ArrayAdapter;
+
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivityAddDefectBinding;
 import com.example.openeyes.recorder.AndroidAudioPlayer;
@@ -29,7 +31,6 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
     private boolean isRecording, isPlaying = false;
     private int counter, countDownTimer = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
         recorder = new AndroidAudioRecorder(this);
         player = new AndroidAudioPlayer(this);
 
+        setCategory();
         binding.lottieAudioWave.pauseAnimation();
         binding.imgRecordStopAudio.setOnClickListener(this);
         binding.imgPlayAudio.setOnClickListener(this);
@@ -123,6 +125,12 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             player.stop();
 
         }
+
+    }
+
+    private void setCategory() {
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, R.layout.item_category, getResources().getStringArray(R.array.category));
+        binding.autoTextAddDefectCategory.setAdapter(categoryAdapter);
 
     }
 
