@@ -21,4 +21,12 @@ public class Constants {
     public static final String USER_NICK_NAME = "nickName";
     public static final String USER_EMAIL = "email";
 
+    // Volley request
+    public static final String NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/reverse?";
+
+    // Intent put extra
+    public static final String DEFECT_ADDRESS = "address";
+    public static final String DEFECT_LATITUDE = "lat";
+    public static final String DEFECT_LONGITUDE = "lon";
+
 }

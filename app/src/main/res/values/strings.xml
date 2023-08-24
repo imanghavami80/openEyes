@@ -31,6 +31,7 @@
     <string name="need_permission">Permission needed for this feature.</string>
     <string name="hide">HIDE</string>
     <string name="enable">Enable</string>
+    <string name="hole_to_get">Hold to select location.</string>
     <string name="map">Map</string>
     <string name="defects">Defects</string>
     <string name="profile">Profile</string>
@@ -50,6 +51,8 @@
     <string name="map_view">Map View</string>
     <string name="list_view">List View</string>
     <string name="add_defect">Add Defect</string>
+    <string name="pick">Pick</string>
+    <string name="get_location">Get Location</string>
     <string name="upload_photos">Upload photos</string>
     <string name="zero_time">00:00</string>
     <string-array name="category">

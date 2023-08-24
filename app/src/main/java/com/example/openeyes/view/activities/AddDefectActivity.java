@@ -1,9 +1,15 @@
 package com.example.openeyes.view.activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -13,11 +19,14 @@ import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivityAddDefectBinding;
 import com.example.openeyes.recorder.AndroidAudioPlayer;
 import com.example.openeyes.recorder.AndroidAudioRecorder;
+import com.example.openeyes.utility.Constants;
 import com.example.openeyes.utility.PermissionManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -44,6 +53,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
         binding.imgRecordStopAudio.setOnClickListener(this);
         binding.imgPlayAudio.setOnClickListener(this);
         binding.imgPauseAudio.setOnClickListener(this);
+        binding.viewTxtLayoutAddDefectAddress.setOnClickListener(this);
         binding.toolbarAddDefect.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,8 +134,10 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             binding.lottieAudioWave.pauseAnimation();
             player.stop();
 
-        }
+        } else if (view.getId() == binding.viewTxtLayoutAddDefectAddress.getId()) {
+            goToGetLocationActivity();
 
+        }
     }
 
     private void setCategory() {
@@ -192,6 +204,34 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
         int min = (time % 3600) / 60;
         int sec = time % 60;
         return String.format(Locale.getDefault(), "%02d:%02d", min, sec);
+
+    }
+
+    private void goToGetLocationActivity() {
+        Intent intent = new Intent(AddDefectActivity.this, GetLocationActivity.class);
+        someActivityResultLauncherForMap.launch(intent);
+
+    }
+
+    private ActivityResultLauncher<Intent> someActivityResultLauncherForMap = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            getLatLng(result.getData());
+
+                        }
+                    }
+
+                }
+            }
+    );
+
+    private void getLatLng(Intent data) {
+        // TODO: Also get the lat & lon.
+        binding.edtAddDefectAddress.setText(data.getStringExtra(Constants.DEFECT_ADDRESS));
 
     }
 

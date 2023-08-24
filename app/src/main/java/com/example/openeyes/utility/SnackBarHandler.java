@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class SnackBarHandler {
 
+    // Gray background, blue text, hide action, long.
     public static void snackBarHideAction(Context cnx, View rootView, String message) {
         Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
 
@@ -22,6 +23,42 @@ public class SnackBarHandler {
                 .setActionTextColor(cnx.getColor(R.color.blue_semi_dark))
                 .setTextColor(cnx.getColor(R.color.blue_dark))
                 .setBackgroundTint(cnx.getColor(R.color.gray2))
+                .show();
+
+    }
+
+    // BLue background, gray text, hide action, identified.
+    public static void snackBarHideAction2(Context cnx, View rootView, String message) {
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_INDEFINITE);
+
+        snackbar.setAction(cnx.getString(R.string.hide), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        snackbar.dismiss();
+
+                    }
+                })
+                .setActionTextColor(cnx.getColor(R.color.blue_light))
+                .setTextColor(cnx.getColor(R.color.white_light))
+                .setBackgroundTint(cnx.getColor(R.color.blue_dark))
+                .show();
+
+    }
+
+    // BLue background, gray text, hide action, long.
+    public static void snackBarHideAction3(Context cnx, View rootView, String message) {
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+
+        snackbar.setAction(cnx.getString(R.string.hide), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        snackbar.dismiss();
+
+                    }
+                })
+                .setActionTextColor(cnx.getColor(R.color.blue_light))
+                .setTextColor(cnx.getColor(R.color.white_light))
+                .setBackgroundTint(cnx.getColor(R.color.blue_dark))
                 .show();
 
     }

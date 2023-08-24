@@ -12,6 +12,7 @@
 
     <application
         android:allowBackup="true"
+        tools:replace="android:allowBackup"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/svg_logo"
@@ -20,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenEyes"
         tools:targetApi="31">
+        <activity
+            android:name=".view.activities.GetLocationActivity"
+            android:exported="false" />
         <activity
             android:name=".view.activities.AddDefectActivity"
             android:exported="false" />
