@@ -1,5 +1,7 @@
 package com.example.openeyes.utility;
 
+import java.io.File;
+
 public class Constants {
     // Splash timer
     public static final long SPLASH_DISPLAY_LENGTH = 2000;
@@ -7,6 +9,7 @@ public class Constants {
     // Permissions
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     public static final int RECORD_AUDIO_PERMISSION_REQUEST_CODE = 2;
+    public static final int CAMERA_PERMISSION_REQUEST_CODE = 3;
 
 
     // Shared preferences

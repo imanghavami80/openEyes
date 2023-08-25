@@ -16,4 +16,6 @@
     <color name="gray4">#BBBBBB</color>
     <color name="grey5">#B1C8E2</color>
     <color name="gold">#EAD41D</color>
+    <color name="ripple_white">#33A1A9BC</color>
+    <color name="black_60">#99000000</color>
 </resources>

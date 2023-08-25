@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/ripple_null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewAddDefectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgAddDefectImage"
+                android:layout_width="@dimen/_46sdp"
+                android:layout_height="@dimen/_46sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/svg_profile" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/imgDeleteAddDefectImage"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:background="@drawable/circle_transparent_grey"
+            android:padding="@dimen/_3sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/svg_delete"
+            app:layout_constraintBottom_toBottomOf="@id/cardViewAddDefectImage"
+            app:layout_constraintEnd_toEndOf="@id/cardViewAddDefectImage"
+            app:layout_constraintStart_toStartOf="@id/cardViewAddDefectImage"
+            app:layout_constraintTop_toTopOf="@id/cardViewAddDefectImage"
+            app:layout_constraintVertical_bias="0.90" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

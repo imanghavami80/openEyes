@@ -6,24 +6,32 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.example.openeyes.R;
+import com.example.openeyes.adapter.AddDefectImagesAdapter;
 import com.example.openeyes.databinding.ActivityAddDefectBinding;
 import com.example.openeyes.recorder.AndroidAudioPlayer;
 import com.example.openeyes.recorder.AndroidAudioRecorder;
 import com.example.openeyes.utility.Constants;
 import com.example.openeyes.utility.PermissionManager;
+import com.example.openeyes.utility.SnackBarHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +47,10 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
     private File audioFile = null;
     private boolean isRecording, isPlaying = false;
     private int counter, countDownTimer = 0;
+    private int countImages = 0;
+    private ArrayList<Uri> itemsDefectImages = new ArrayList<>();
+    private AddDefectImagesAdapter addDefectImagesAdapter;
+    private Uri capturedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
         binding.imgPlayAudio.setOnClickListener(this);
         binding.imgPauseAudio.setOnClickListener(this);
         binding.viewTxtLayoutAddDefectAddress.setOnClickListener(this);
+        binding.txtBtnUploadDefectPhoto.setOnClickListener(this);
         binding.toolbarAddDefect.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +87,8 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                     new AppSettingsDialog.Builder(AddDefectActivity.this).build().show();
                 } else {
                     permissionManager.requestLocationPermissions();
+                    permissionManager.requestRecordAudioPermission();
+                    permissionManager.requestCameraPermission();
 
                 }
             }
@@ -96,6 +111,8 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             if (permissionManager.hasRecordAudioPermission()) {
                 if (!isRecording) {
                     isRecording = true;
+                    binding.imgPlayAudio.setEnabled(false);
+                    binding.imgPauseAudio.setEnabled(false);
                     binding.lottieAudioWave.playAnimation();
                     binding.imgRecordStopAudio.setImageDrawable(getDrawable(R.drawable.svg_stop));
 
@@ -110,6 +127,8 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
 
                 } else {
                     isRecording = false;
+                    binding.imgPlayAudio.setEnabled(true);
+                    binding.imgPauseAudio.setEnabled(true);
                     binding.lottieAudioWave.pauseAnimation();
                     binding.imgRecordStopAudio.setImageDrawable(getDrawable(R.drawable.svg_record));
 
@@ -137,6 +156,19 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
         } else if (view.getId() == binding.viewTxtLayoutAddDefectAddress.getId()) {
             goToGetLocationActivity();
 
+        } else if (view.getId() == binding.txtBtnUploadDefectPhoto.getId()) {
+            if (permissionManager.hasCameraPermission()) {
+                if (countImages < 3) {
+                    takePhoto();
+
+                } else {
+                    SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.max_image_uploaded));
+
+                }
+            } else {
+                permissionManager.requestCameraPermission();
+
+            }
         }
     }
 
@@ -158,15 +190,13 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
 
                 binding.txtAudioRecorderTime.setText(prepareTimeText(counter));
 
-                if (++counter < 120 && isRecording) {
+                if (++counter < 61 && isRecording) {
                     handler.postDelayed(this, 1000L);
                     return;
 
                 }
 
-                binding.lottieAudioWave.pauseAnimation();
-                binding.imgRecordStopAudio.setImageDrawable(getDrawable(R.drawable.svg_stop));
-                isRecording = false;
+                binding.imgRecordStopAudio.callOnClick();
 
             }
         }, 0L);
@@ -213,26 +243,62 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    private ActivityResultLauncher<Intent> someActivityResultLauncherForMap = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
-                        if (result.getData() != null) {
-                            getLatLng(result.getData());
-
-                        }
-                    }
-
-                }
-            }
-    );
-
     private void getLatLng(Intent data) {
         // TODO: Also get the lat & lon.
         binding.edtAddDefectAddress.setText(data.getStringExtra(Constants.DEFECT_ADDRESS));
 
     }
+
+    private void initRecyclerDefectImages(ArrayList<Uri> items) {
+        addDefectImagesAdapter = new AddDefectImagesAdapter(this, items);
+        binding.recyclerUploadDefectPhoto.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+        binding.recyclerUploadDefectPhoto.setAdapter(addDefectImagesAdapter);
+
+    }
+
+    private void createImageDataForUpload(Uri uri) {
+        itemsDefectImages.add(uri);
+        initRecyclerDefectImages(itemsDefectImages);
+
+    }
+
+    private void takePhoto() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "defectImage");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "fromTheCamera");
+        capturedImageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri);
+        someActivityResultLauncherForCamera.launch(intent);
+
+    }
+
+    private ActivityResultLauncher<Intent> someActivityResultLauncherForMap = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        getLatLng(result.getData());
+
+                    }
+                }
+            }
+    );
+
+    private ActivityResultLauncher<Intent> someActivityResultLauncherForCamera = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK /* && result.getData() != null*/) {
+                        countImages++;
+                        createImageDataForUpload(capturedImageUri);
+
+                    }
+                }
+            }
+    );
 
 }

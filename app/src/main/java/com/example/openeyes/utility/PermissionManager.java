@@ -111,4 +111,44 @@ public class PermissionManager {
 
         }
     }
+
+    public boolean hasCameraPermission() {
+        if (this.activity != null) {
+            return EasyPermissions.hasPermissions(
+                    this.activity.getApplicationContext(),
+                    Manifest.permission.CAMERA
+            );
+
+        } else if (this.fragment != null) {
+            return EasyPermissions.hasPermissions(
+                    this.fragment.requireContext(),
+                    Manifest.permission.CAMERA
+            );
+
+        }
+
+        return false;
+
+    }
+
+    public void requestCameraPermission() {
+        if (this.activity != null) {
+            EasyPermissions.requestPermissions(
+                    this.activity,
+                    this.activity.getString(R.string.need_permission),
+                    Constants.CAMERA_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.CAMERA
+            );
+
+        } else if (this.fragment != null) {
+            EasyPermissions.requestPermissions(
+                    this.fragment,
+                    this.fragment.getString(R.string.need_permission),
+                    Constants.CAMERA_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.CAMERA
+            );
+
+        }
+    }
+
 }
