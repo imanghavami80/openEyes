@@ -17,6 +17,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -34,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -67,6 +70,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
         binding.imgPauseAudio.setOnClickListener(this);
         binding.viewTxtLayoutAddDefectAddress.setOnClickListener(this);
         binding.txtBtnUploadDefectPhoto.setOnClickListener(this);
+        binding.btnAddDefect.setOnClickListener(this);
         binding.toolbarAddDefect.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,6 +173,9 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                 permissionManager.requestCameraPermission();
 
             }
+        } else if (view.getId() == binding.btnAddDefect.getId()) {
+            checkErrorAndAction();
+
         }
     }
 
@@ -300,5 +307,134 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                 }
             }
     );
+
+    private boolean checkErrorEdtAddDefectAddress() {
+        if (Objects.requireNonNull(binding.edtAddDefectAddress.getText()).toString().trim().isEmpty()) {
+            binding.txtLayoutAddDefectAddress.setError(getString(R.string.error_empty_field));
+            return false;
+
+        } else {
+            binding.txtLayoutAddDefectAddress.setError(null);
+            return true;
+
+        }
+    }
+
+    private boolean checkErrorAutoTextAddDefectCategory() {
+        String[] categories = getResources().getStringArray(R.array.category);
+        String selectedCategory = binding.autoTextAddDefectCategory.getText().toString().trim();
+
+        if (selectedCategory.isEmpty()) {
+            binding.spinnerAddDefectCategory.setError(getString(R.string.error_empty_field));
+            return false;
+
+        }
+
+        for (String category : categories) {
+            if (category.equals(selectedCategory)) {
+                binding.spinnerAddDefectCategory.setError(null);
+                return true;
+
+            }
+        }
+
+        binding.spinnerAddDefectCategory.setError(getString(R.string.error_category_not_accepted));
+        return false;
+
+    }
+
+    private boolean checkErrorEdtAddDefectDescription() {
+        if (Objects.requireNonNull(binding.edtAddDefectDescription.getText()).toString().trim().isEmpty()) {
+            binding.txtLayoutAddDefectDescription.setError(getString(R.string.error_empty_field));
+            return false;
+
+        } else {
+            binding.txtLayoutAddDefectDescription.setError(null);
+            return true;
+
+        }
+    }
+
+    private void handleError() {
+
+        binding.edtAddDefectAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().trim().isEmpty()) {
+                    binding.txtLayoutAddDefectAddress.setError(getString(R.string.error_empty_field));
+
+                } else {
+                    binding.txtLayoutAddDefectAddress.setError(null);
+
+                }
+            }
+        });
+
+        binding.edtAddDefectDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().trim().isEmpty()) {
+                    binding.txtLayoutAddDefectDescription.setError(getString(R.string.error_empty_field));
+
+                } else {
+                    binding.txtLayoutAddDefectDescription.setError(null);
+
+                }
+            }
+        });
+
+        binding.autoTextAddDefectCategory.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().trim().isEmpty()) {
+                    binding.spinnerAddDefectCategory.setError(getString(R.string.error_empty_field));
+
+                } else {
+                    binding.spinnerAddDefectCategory.setError(null);
+
+                }
+            }
+        });
+
+    }
+
+    private void checkErrorAndAction() {
+        handleError();
+
+        if (checkErrorEdtAddDefectAddress() && checkErrorAutoTextAddDefectCategory() && checkErrorEdtAddDefectDescription()) {
+
+
+        }
+    }
 
 }

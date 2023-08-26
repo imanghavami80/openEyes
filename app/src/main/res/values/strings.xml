@@ -39,6 +39,7 @@
     <string name="error">ERROR.  </string>
     <string name="error_occurred">An error occurred. please try again later.</string>
     <string name="error_empty_field">This field can\'t be empty</string>
+    <string name="error_category_not_accepted">Only the given categories are acceptable</string>
     <string name="error_short_password">Password must be at least 6 characters.</string>
     <string name="error_email_format">Invalid email format</string>
     <string name="error_password_not_same">The passwords are not the same.</string>
