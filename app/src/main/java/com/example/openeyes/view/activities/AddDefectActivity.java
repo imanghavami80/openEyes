@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -19,24 +18,37 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.example.openeyes.R;
 import com.example.openeyes.adapter.AddDefectImagesAdapter;
 import com.example.openeyes.databinding.ActivityAddDefectBinding;
+import com.example.openeyes.model.Defect;
 import com.example.openeyes.recorder.AndroidAudioPlayer;
 import com.example.openeyes.recorder.AndroidAudioRecorder;
 import com.example.openeyes.utility.Constants;
+import com.example.openeyes.utility.MySharedPreferences;
 import com.example.openeyes.utility.PermissionManager;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -44,16 +56,18 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class AddDefectActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityAddDefectBinding binding;
+    private MySharedPreferences mySharedPreferences;
     private PermissionManager permissionManager;
     private AndroidAudioRecorder recorder;
     private AndroidAudioPlayer player;
     private File audioFile = null;
     private boolean isRecording, isPlaying = false;
     private int counter, countDownTimer = 0;
-    private int countImages = 0;
     private ArrayList<Uri> itemsDefectImages = new ArrayList<>();
-    private AddDefectImagesAdapter addDefectImagesAdapter;
     private Uri capturedImageUri;
+    private double lat, lon = 0.0;
+    private String randomId = UUID.randomUUID().toString();;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +76,8 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
 
         recorder = new AndroidAudioRecorder(this);
         player = new AndroidAudioPlayer(this);
+
+        mySharedPreferences = new MySharedPreferences(this);
 
         setCategory();
         binding.lottieAudioWave.pauseAnimation();
@@ -162,7 +178,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
 
         } else if (view.getId() == binding.txtBtnUploadDefectPhoto.getId()) {
             if (permissionManager.hasCameraPermission()) {
-                if (countImages < 3) {
+                if (itemsDefectImages.size() < 3) {
                     takePhoto();
 
                 } else {
@@ -250,14 +266,15 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void getLatLng(Intent data) {
-        // TODO: Also get the lat & lon.
+    private void getLatLon(Intent data) {
+        lat = data.getDoubleExtra(Constants.DEFECT_LATITUDE, 0.0);
+        lon = data.getDoubleExtra(Constants.DEFECT_LONGITUDE, 0.0);
         binding.edtAddDefectAddress.setText(data.getStringExtra(Constants.DEFECT_ADDRESS));
 
     }
 
     private void initRecyclerDefectImages(ArrayList<Uri> items) {
-        addDefectImagesAdapter = new AddDefectImagesAdapter(this, items);
+        AddDefectImagesAdapter addDefectImagesAdapter = new AddDefectImagesAdapter(this, items);
         binding.recyclerUploadDefectPhoto.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         binding.recyclerUploadDefectPhoto.setAdapter(addDefectImagesAdapter);
 
@@ -287,7 +304,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        getLatLng(result.getData());
+                        getLatLon(result.getData());
 
                     }
                 }
@@ -300,13 +317,18 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK /* && result.getData() != null*/) {
-                        countImages++;
                         createImageDataForUpload(capturedImageUri);
 
                     }
                 }
             }
     );
+
+    private String getCurrentDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return formatter.format(new Date());
+
+    }
 
     private boolean checkErrorEdtAddDefectAddress() {
         if (Objects.requireNonNull(binding.edtAddDefectAddress.getText()).toString().trim().isEmpty()) {
@@ -432,7 +454,76 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
         handleError();
 
         if (checkErrorEdtAddDefectAddress() && checkErrorAutoTextAddDefectCategory() && checkErrorEdtAddDefectDescription()) {
+            // Set uploading view visible.
+            binding.constLayoutAddDefectUploading.setVisibility(View.VISIBLE);
+            binding.btnAddDefect.setEnabled(false);
 
+            // Get all defect information.
+            String defectAddress = binding.edtAddDefectAddress.getText().toString().trim();
+            String defectCategory = binding.autoTextAddDefectCategory.getText().toString().trim();
+            String defectDescription = binding.edtAddDefectDescription.getText().toString().trim();
+            String defectUUID = randomId;
+            String defectDate = getCurrentDate();
+            String userEmail = mySharedPreferences.getEncodedUserEmail();
+
+            StorageReference fStorage = FirebaseStorage.getInstance().getReference(userEmail);
+            DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
+
+            // Saving other details.
+            Defect newDefect = new Defect(defectUUID, defectAddress, lat, lon, defectCategory, defectDescription, defectDate, 0, 0.0f);
+
+            // We have to store the data level by level. Others -(if successful)-> audio -(if successful)-> images.
+            fDatabase.child(userEmail).setValue(newDefect).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+
+                        // Saving the audio.
+                        if (counter != 0) {
+                            // We have an recorded audio file...
+                            fStorage.child(defectUUID).child("audio").child("audioFile").putFile(Uri.fromFile(audioFile)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                    if (task.isSuccessful()) {
+
+                                        // Saving the images.
+                                        for (int i = 0; i < itemsDefectImages.size(); i++) {
+                                            fStorage.child(defectUUID).child("images").child("image" + i).putFile(itemsDefectImages.get(0)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                                                        binding.btnAddDefect.setEnabled(true);
+                                                        finish();
+
+                                                    } else {
+                                                        SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
+                                                        binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                                                        binding.btnAddDefect.setEnabled(true);
+
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                    } else {
+                                        SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
+                                        binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                                        binding.btnAddDefect.setEnabled(true);
+
+                                    }
+                                }
+                            });
+                        }
+
+                    } else {
+                        SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
+                        binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                        binding.btnAddDefect.setEnabled(true);
+
+                    }
+                }
+            });
 
         }
     }

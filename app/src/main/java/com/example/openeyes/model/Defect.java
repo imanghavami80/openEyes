@@ -1,12 +1,21 @@
 package com.example.openeyes.model;
 
+import android.net.Uri;
+
+import java.util.ArrayList;
+
 public class Defect {
 
-    private String category;
+    private String uniqueID;
     private String location;
+    private double latitude;
+    private double longitude;
+    private String category;
     private String description;
+    private String date;
     private int likes;
     private float rate;
+
 
     public Defect(String category, String location, String description, int likes, float rate) {
         this.category = category;
@@ -16,12 +25,24 @@ public class Defect {
         this.rate = rate;
     }
 
-    public String getCategory() {
-        return category;
+    public Defect(String uniqueID, String location, double latitude, double longitude, String category, String description, String date, int likes, float rate) {
+        this.uniqueID = uniqueID;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.category = category;
+        this.description = description;
+        this.date = date;
+        this.likes = likes;
+        this.rate = rate;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public String getUniqueID() {
+        return uniqueID;
+    }
+
+    public void setUniqueID(String uniqueID) {
+        this.uniqueID = uniqueID;
     }
 
     public String getLocation() {
@@ -32,12 +53,44 @@ public class Defect {
         this.location = location;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getLikes() {
@@ -55,5 +108,4 @@ public class Defect {
     public void setRate(float rate) {
         this.rate = rate;
     }
-
 }

@@ -22,6 +22,7 @@
     <string name="enter_nickname_hint">Nickname</string>
     <string name="reset_password">Reset Password</string>
     <string name="add_defect_hint_1">Report what you have detected in your city to share the problem with others.</string>
+    <string name="uploading">This may take a while, please be patient.</string>
     <string name="forgot_password_related">To recover your account!</string>
     <string name="forgot_password_hint_1">Please provide the email address that you used when you signed up for your account.</string>
     <string name="forgot_password_hint_2">We will send you an email that will allow you to reset your password.</string>

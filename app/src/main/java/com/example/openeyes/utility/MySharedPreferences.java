@@ -33,6 +33,10 @@ public class MySharedPreferences {
         return pref.getString(Constants.PREF_KEY_USER_EMAIL, "");
     }
 
+    public String getEncodedUserEmail() {
+        return pref.getString(Constants.PREF_KEY_USER_EMAIL, "").replace(".", ",").replace("@", "-");
+    }
+
     public String getUserFullName() {
         return pref.getString(Constants.PREF_KEY_USER_FULL_NAME, "");
     }
