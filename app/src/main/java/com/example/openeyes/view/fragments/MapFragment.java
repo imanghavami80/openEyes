@@ -6,24 +6,35 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.FragmentMapBinding;
 import com.example.openeyes.utility.PermissionManager;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.Marker;
+
 import java.util.List;
+
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -31,7 +42,6 @@ public class MapFragment extends Fragment implements View.OnClickListener {
 
     private FragmentMapBinding binding;
     private PermissionManager permissionManager;
-    private static double latitude, longitude = 0.0;
     private IMapController mapController;
     private Marker userLocationMarker;
 
@@ -84,16 +94,39 @@ public class MapFragment extends Fragment implements View.OnClickListener {
         mapController.setZoom(11.0);
         mapController.setCenter(new GeoPoint(35.7443, 51.4435));
 
-        double[] a = {35.7017, 35.6920, 35.7513, 35.29226, 35.32291};
-        double[] b = {51.4501, 51.4294, 51.7209, 47.02382, 46.99302};
+        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
+        fDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot childSnapshot1 : snapshot.getChildren()) {
+                        if (childSnapshot1.exists()) {
+                            for (DataSnapshot childSnapshot2 : childSnapshot1.getChildren()) {
+                                if (childSnapshot2.exists()) {
+                                    double lat = childSnapshot2.child("latitude").getValue(Double.class);
+                                    double lon = childSnapshot2.child("longitude").getValue(Double.class);
 
-        for (int i=0; i<a.length; i++) {
-            Marker marker = new Marker(binding.mapViewHome);
-            marker.setPosition(new GeoPoint(a[i], b[i]));
-            marker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_defect_location));
-            binding.mapViewHome.getOverlays().add(marker);
+                                    Marker marker = new Marker(binding.mapViewHome);
+                                    marker.setPosition(new GeoPoint(lat, lon));
+                                    marker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_defect_location));
+                                    binding.mapViewHome.getOverlays().add(marker);
 
-        }
+                                }
+                            }
+                        }
+                    }
+
+                    binding.constLayoutMapView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                SnackBarHandler.snackBarHideAction3(getContext(), binding.getRoot(), getString(R.string.error_occurred));
+                binding.constLayoutMapView.setVisibility(View.GONE);
+
+            }
+        });
 
         return binding.getRoot();
 
@@ -131,16 +164,13 @@ public class MapFragment extends Fragment implements View.OnClickListener {
                     locationManager.requestLocationUpdates(holder, 12000, 7, new android.location.LocationListener() {
                         @Override
                         public void onLocationChanged(@NonNull Location location) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-
                             mapController.setZoom(18.0);
-                            mapController.setCenter(new GeoPoint(latitude, longitude));
+                            mapController.setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
 
                             binding.mapViewHome.getOverlays().remove(userLocationMarker);
 
                             userLocationMarker = new Marker(binding.mapViewHome);
-                            userLocationMarker.setPosition(new GeoPoint(latitude, longitude));
+                            userLocationMarker.setPosition(new GeoPoint(location.getLatitude(), location.getLongitude()));
                             userLocationMarker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_current_location));
                             binding.mapViewHome.getOverlays().add(userLocationMarker);
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Defect {
 
-    private String uniqueID;
     private String location;
     private double latitude;
     private double longitude;
@@ -25,8 +24,7 @@ public class Defect {
         this.rate = rate;
     }
 
-    public Defect(String uniqueID, String location, double latitude, double longitude, String category, String description, String date, int likes, float rate) {
-        this.uniqueID = uniqueID;
+    public Defect(String location, double latitude, double longitude, String category, String description, String date, int likes, float rate) {
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -35,14 +33,6 @@ public class Defect {
         this.date = date;
         this.likes = likes;
         this.rate = rate;
-    }
-
-    public String getUniqueID() {
-        return uniqueID;
-    }
-
-    public void setUniqueID(String uniqueID) {
-        this.uniqueID = uniqueID;
     }
 
     public String getLocation() {

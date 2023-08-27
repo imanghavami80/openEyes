@@ -470,10 +470,10 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
 
             // Saving other details.
-            Defect newDefect = new Defect(defectUUID, defectAddress, lat, lon, defectCategory, defectDescription, defectDate, 0, 0.0f);
+            Defect newDefect = new Defect(defectAddress, lat, lon, defectCategory, defectDescription, defectDate, 0, 0.0f);
 
             // We have to store the data level by level. Others -(if successful)-> audio -(if successful)-> images.
-            fDatabase.child(userEmail).setValue(newDefect).addOnCompleteListener(new OnCompleteListener<Void>() {
+            fDatabase.child(userEmail).child(defectUUID).setValue(newDefect).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
