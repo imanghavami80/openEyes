@@ -110,6 +110,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_slab_light"
+                            android:imeOptions="actionNext"
                             android:inputType="textEmailAddress"
                             android:textColor="@color/blue_dark" />
 
@@ -221,17 +222,29 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progressBarSignIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayoutSignInProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_80"
             android:visibility="gone"
-            app:indicatorColor="@color/blue_semi_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressBarSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:indicatorColor="@color/blue_semi_dark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -28,6 +28,7 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_pass);
 
         binding.btnSendLink.setOnClickListener(this);
+        binding.constLayoutForgotPasswordProgress.setOnClickListener(null);
 
     }
 
@@ -106,7 +107,7 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
 
         if (checkErrorEdtForgotPasswordEmail()) {
             // Set progress bar visible.
-            binding.progressBarForgotPassword.setVisibility(View.VISIBLE);
+            binding.constLayoutForgotPasswordProgress.setVisibility(View.VISIBLE);
 
             // Getting the entered email by user.
             String enteredEmail = binding.edtForgotPasswordEmail.getText().toString().trim();
@@ -118,17 +119,17 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.reset_link_sent));
-                        binding.progressBarForgotPassword.setVisibility(View.GONE);
+                        binding.constLayoutForgotPasswordProgress.setVisibility(View.GONE);
 
                     } else {
                         Exception exception = task.getException();
                         if (exception instanceof FirebaseNetworkException) {
                             SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
-                            binding.progressBarForgotPassword.setVisibility(View.GONE);
+                            binding.constLayoutForgotPasswordProgress.setVisibility(View.GONE);
 
                         } else {
                             SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_reset_link_not_sent));
-                            binding.progressBarForgotPassword.setVisibility(View.GONE);
+                            binding.constLayoutForgotPasswordProgress.setVisibility(View.GONE);
 
                         }
                     }

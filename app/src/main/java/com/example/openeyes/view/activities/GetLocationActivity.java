@@ -173,11 +173,14 @@ public class GetLocationActivity extends AppCompatActivity implements View.OnCli
 
                         binding.mapViewGetLocation.getOverlays().remove(userLocationMarker);
 
-                        userLocationMarker = new Marker(binding.mapViewGetLocation);
-                        userLocationMarker.setPosition(new GeoPoint(latitude, longitude));
-                        userLocationMarker.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.svg_current_location));
-                        binding.mapViewGetLocation.getOverlays().add(userLocationMarker);
+                        try {
+                            userLocationMarker = new Marker(binding.mapViewGetLocation);
+                            userLocationMarker.setPosition(new GeoPoint(latitude, longitude));
+                            userLocationMarker.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.svg_current_location));
+                            binding.mapViewGetLocation.getOverlays().add(userLocationMarker);
 
+                        } catch (Exception e) {
+                        }
                     }
                 });
 

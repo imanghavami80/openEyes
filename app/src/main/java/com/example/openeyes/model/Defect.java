@@ -14,17 +14,21 @@ public class Defect {
     private String date;
     private int likes;
     private float rate;
+    private int haveImage; // (0 -> no image) - (anything but 0 -> number of images)
+    private int haveAudio; // (0 -> no audio) - (1 -> have audio)
 
 
-    public Defect(String category, String location, String description, int likes, float rate) {
-        this.category = category;
+    public Defect(String location, String category, String description, int likes, float rate, int haveImage, int haveAudio) {
         this.location = location;
+        this.category = category;
         this.description = description;
         this.likes = likes;
         this.rate = rate;
+        this.haveImage = haveImage;
+        this.haveAudio = haveAudio;
     }
 
-    public Defect(String location, double latitude, double longitude, String category, String description, String date, int likes, float rate) {
+    public Defect(String location, double latitude, double longitude, String category, String description, String date, int likes, float rate, int haveImage, int haveAudio) {
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -33,6 +37,8 @@ public class Defect {
         this.date = date;
         this.likes = likes;
         this.rate = rate;
+        this.haveImage = haveImage;
+        this.haveAudio = haveAudio;
     }
 
     public String getLocation() {
@@ -97,5 +103,21 @@ public class Defect {
 
     public void setRate(float rate) {
         this.rate = rate;
+    }
+
+    public int getHaveImage() {
+        return haveImage;
+    }
+
+    public void setHaveImage(int haveImage) {
+        this.haveImage = haveImage;
+    }
+
+    public int getHaveAudio() {
+        return haveAudio;
+    }
+
+    public void setHaveAudio(int haveAudio) {
+        this.haveAudio = haveAudio;
     }
 }

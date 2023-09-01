@@ -126,6 +126,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_45sdp"
                             android:fontFamily="@font/roboto_slab_light"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:selectAllOnFocus="true"
                             android:textColor="@color/blue_dark" />

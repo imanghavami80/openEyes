@@ -44,6 +44,8 @@ public class MapFragment extends Fragment implements View.OnClickListener {
     private PermissionManager permissionManager;
     private IMapController mapController;
     private Marker userLocationMarker;
+    private DatabaseReference fDatabase;
+    private ValueEventListener valueEventListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class MapFragment extends Fragment implements View.OnClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false);
 
         binding.cardViewHomeGps.setOnClickListener(this);
+        binding.constLayoutMapView.setOnClickListener(this);
 
         permissionManager = new PermissionManager(this, new EasyPermissions.PermissionCallbacks() {
             @Override
@@ -94,8 +97,8 @@ public class MapFragment extends Fragment implements View.OnClickListener {
         mapController.setZoom(11.0);
         mapController.setCenter(new GeoPoint(35.7443, 51.4435));
 
-        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
-        fDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
+        fDatabase.addValueEventListener(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -117,12 +120,16 @@ public class MapFragment extends Fragment implements View.OnClickListener {
                     }
 
                     binding.constLayoutMapView.setVisibility(View.GONE);
+
+                } else {
+                    binding.constLayoutMapView.setVisibility(View.GONE);
+
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                SnackBarHandler.snackBarHideAction3(getContext(), binding.getRoot(), getString(R.string.error_occurred));
+                SnackBarHandler.snackBarHideAction3(requireContext(), binding.getRoot(), getString(R.string.error_occurred));
                 binding.constLayoutMapView.setVisibility(View.GONE);
 
             }
@@ -137,6 +144,7 @@ public class MapFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onPause() {
         super.onPause();
+        fDatabase.removeEventListener(valueEventListener);
         binding.mapViewHome.onPause();
 
     }
@@ -169,10 +177,15 @@ public class MapFragment extends Fragment implements View.OnClickListener {
 
                             binding.mapViewHome.getOverlays().remove(userLocationMarker);
 
-                            userLocationMarker = new Marker(binding.mapViewHome);
-                            userLocationMarker.setPosition(new GeoPoint(location.getLatitude(), location.getLongitude()));
-                            userLocationMarker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_current_location));
-                            binding.mapViewHome.getOverlays().add(userLocationMarker);
+                            try {
+                                userLocationMarker = new Marker(binding.mapViewHome);
+                                userLocationMarker.setPosition(new GeoPoint(location.getLatitude(), location.getLongitude()));
+                                userLocationMarker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_current_location));
+                                binding.mapViewHome.getOverlays().add(userLocationMarker);
+
+                            } catch (Exception e) {
+                            }
+
 
                         }
                     });

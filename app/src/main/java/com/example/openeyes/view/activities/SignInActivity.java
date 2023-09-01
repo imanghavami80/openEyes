@@ -42,6 +42,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         binding.txtSignInToSignUp2.setOnClickListener(this);
         binding.txtSignInForgotPassword.setOnClickListener(this);
         binding.btnSignIn.setOnClickListener(this);
+        binding.constLayoutSignInProgress.setOnClickListener(null);
 
     }
 
@@ -175,7 +176,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         if (checkErrorEdtSignInEmail() && checkErrorEdtSignInPassword()) {
             // Set progress bar visible.
-            binding.progressBarSignIn.setVisibility(View.VISIBLE);
+            binding.constLayoutSignInProgress.setVisibility(View.VISIBLE);
 
             // Getting what user has entered.
             String enteredEmail = binding.edtSignInEmail.getText().toString().trim();
@@ -206,7 +207,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                     mySharedPreferences.setUserInfo(user);
                                     mySharedPreferences.setLoggedIn(true);
 
-                                    binding.progressBarSignIn.setVisibility(View.GONE);
+                                    binding.constLayoutSignInProgress.setVisibility(View.GONE);
 
                                     goToHomeActivity();
 
@@ -216,7 +217,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
                                 SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
-                                binding.progressBarSignIn.setVisibility(View.GONE);
+                                binding.constLayoutSignInProgress.setVisibility(View.GONE);
 
                             }
                         });
@@ -231,7 +232,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                         }
 
-                        binding.progressBarSignIn.setVisibility(View.GONE);
+                        binding.constLayoutSignInProgress.setVisibility(View.GONE);
 
                     }
                 }

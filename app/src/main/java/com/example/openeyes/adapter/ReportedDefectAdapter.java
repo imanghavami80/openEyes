@@ -1,6 +1,7 @@
 package com.example.openeyes.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ItemReportedDefectBinding;
 import com.example.openeyes.model.Defect;
@@ -18,11 +20,13 @@ import java.util.ArrayList;
 public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<Defect> items;
+    private ArrayList<Defect> itemsTexts;
+    private ArrayList<String> itemsImages;
 
-    public ReportedDefectAdapter(Context context, ArrayList<Defect> items) {
+    public ReportedDefectAdapter(Context context, ArrayList<Defect> itemsTexts, ArrayList<String> itemsImages) {
         this.context = context;
-        this.items = items;
+        this.itemsTexts = itemsTexts;
+        this.itemsImages = itemsImages;
     }
 
     @NonNull
@@ -34,15 +38,21 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
 
     @Override
     public void onBindViewHolder(@NonNull ReportedDefectAdapter.ViewHolder holder, int position) {
-        Defect item = items.get(position);
+        Defect itemText = itemsTexts.get(position);
+        String itemImage = itemsImages.get(position);
 
-        holder.binding.ratingBarReportedDefect.setRating(item.getRate());
-        holder.binding.txtReportedDefectLikes.setText(item.getLikes() + "");
-        holder.binding.txtReportedDefectCategory.setText(item.getCategory());
-        holder.binding.txtReportedDefectLocation.setText(item.getLocation());
-        holder.binding.txtReportedDefectDescription.setText(item.getDescription());
+        holder.binding.ratingBarReportedDefect.setRating(itemText.getRate());
+        holder.binding.txtReportedDefectLikes.setText(itemText.getLikes() + "");
+        holder.binding.txtReportedDefectCategory.setText(itemText.getCategory());
+        holder.binding.txtReportedDefectLocation.setText(itemText.getLocation());
+        holder.binding.txtReportedDefectDescription.setText(itemText.getDescription());
+        Glide
+            .with(this.context)
+            .load(itemImage)
+            .placeholder(context.getDrawable(R.drawable.png_image_holder))
+            .into(holder.binding.imgReportedDefect);
 
-        if (position == items.size() - 1)
+        if (position == itemsTexts.size() - 1)
             holder.binding.viewDefects3.setVisibility(View.VISIBLE);
         else
             holder.binding.viewDefects3.setVisibility(View.GONE);
@@ -51,7 +61,7 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemsTexts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -36,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         binding.txtSignUpToSignIn2.setOnClickListener(this);
         binding.btnSignUp.setOnClickListener(this);
+        binding.constLayoutSignUpProgress.setOnClickListener(null);
 
     }
 
@@ -272,7 +273,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             if (Objects.requireNonNull(binding.edtSignUpPassword.getText()).toString().trim().equals(Objects.requireNonNull(binding.edtSignUpPasswordConfirm.getText()).toString().trim())) {
                 if (binding.checkBoxSignUp.isChecked()) {
                     // Set progress bar visible.
-                    binding.progressBarSignUp.setVisibility(View.VISIBLE);
+                    binding.constLayoutSignUpProgress.setVisibility(View.VISIBLE);
 
                     // Getting what user has entered.
                     String enteredFullName = Objects.requireNonNull(binding.edtSignUpName.getText()).toString().trim();
@@ -308,13 +309,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                             mySharedPreferences.setUserInfo(user);
                                                             mySharedPreferences.setLoggedIn(true);
 
-                                                            binding.progressBarSignUp.setVisibility(View.GONE);
+                                                            binding.constLayoutSignUpProgress.setVisibility(View.GONE);
 
                                                             goToHomeActivity();
 
                                                         } else {
                                                             SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
-                                                            binding.progressBarSignUp.setVisibility(View.GONE);
+                                                            binding.constLayoutSignUpProgress.setVisibility(View.GONE);
 
                                                         }
                                                     }
@@ -322,7 +323,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                                             } else {
                                                 SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
-                                                binding.progressBarSignUp.setVisibility(View.GONE);
+                                                binding.constLayoutSignUpProgress.setVisibility(View.GONE);
 
                                             }
                                         }
@@ -330,13 +331,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                                 } else {
                                     SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_user_exist));
-                                    binding.progressBarSignUp.setVisibility(View.GONE);
+                                    binding.constLayoutSignUpProgress.setVisibility(View.GONE);
 
                                 }
 
                             } else {
                                 SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
-                                binding.progressBarSignUp.setVisibility(View.GONE);
+                                binding.constLayoutSignUpProgress.setVisibility(View.GONE);
 
                             }
 
