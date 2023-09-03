@@ -502,8 +502,6 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                                                         if (task.isSuccessful()) {
                                                             binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
                                                             binding.btnAddDefect.setEnabled(false);
-                                                            // To see if we have to reload the recycler or not.
-                                                            setResult(RESULT_OK, getIntent());
                                                             finish();
 
                                                         } else {
@@ -532,8 +530,6 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                         if (task.isSuccessful()) {
                                             binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
-                                            // To see if we have to reload the recycler or not.
-                                            setResult(RESULT_OK, getIntent());
                                             finish();
 
                                         } else {
@@ -547,8 +543,6 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                             }
                         } else {
                             binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
-                            // To see if we have to reload the recycler or not.
-                            setResult(RESULT_OK, getIntent());
                             finish();
 
                         }

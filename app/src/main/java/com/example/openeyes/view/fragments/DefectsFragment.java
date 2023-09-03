@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import android.view.ViewGroup;
 import com.example.openeyes.R;
 import com.example.openeyes.adapter.ReportedDefectAdapter;
 import com.example.openeyes.databinding.FragmentDefectsBinding;
-import com.example.openeyes.model.Defect;
+import com.example.openeyes.model.Defect2;
 import com.example.openeyes.utility.SnackBarHandler;
 import com.example.openeyes.view.activities.AddDefectActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,14 +42,16 @@ import java.util.ArrayList;
 public class DefectsFragment extends Fragment implements View.OnClickListener {
 
     private FragmentDefectsBinding binding;
-    private ArrayList<Defect> itemsDefect = new ArrayList<>();
-    private ArrayList<String> itemsDefectImages = new ArrayList<>();
+    private ArrayList<Defect2> itemsDefect = new ArrayList<>();
+    ;
     private StorageReference fStorage;
     private DatabaseReference fDatabase;
     private ValueEventListener valueEventListener1;
     private ValueEventListener valueEventListener2;
     private int numberOfReportedDefects = 0;
     private int numberOfGottenDefects = 0;
+    private boolean showRecycler = false;
+    private boolean isDownloadCancelled  = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +82,14 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.toString().trim().equals(Integer.toString(numberOfReportedDefects))) {
-                    initDefectsRecycler(itemsDefect, itemsDefectImages);
-                    binding.constLayoutListView.setVisibility(View.GONE);
+                    if (showRecycler) {
+                        initDefectsRecycler(itemsDefect);
+                        binding.constLayoutListView.setVisibility(View.GONE);
+
+                    } else {
+                        getImageData();
+
+                    }
 
                 }
             }
@@ -88,8 +97,6 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
 
         fStorage = FirebaseStorage.getInstance().getReference();
         fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
-
-//        getData();
 
         return binding.getRoot();
 
@@ -102,8 +109,9 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
         super.onPause();
         fDatabase.removeEventListener(valueEventListener1);
         fDatabase.removeEventListener(valueEventListener2);
+        showRecycler = false;
+        isDownloadCancelled = true;
         itemsDefect.clear();
-        itemsDefectImages.clear();
         numberOfReportedDefects = 0;
         numberOfGottenDefects = 0;
 
@@ -112,7 +120,10 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+        binding.constLayoutListView.setVisibility(View.VISIBLE);
+        isDownloadCancelled = false;
+        getTextData();
+
     }
 
     @Override
@@ -123,21 +134,8 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private ActivityResultLauncher<Intent> someActivityResultLauncherForAddDefect = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        getData();
-
-                    }
-                }
-            }
-    );
-
-    private void initDefectsRecycler(ArrayList<Defect> reportedDefects, ArrayList<String> reportedDefectsImages) {
-        ReportedDefectAdapter adapter = new ReportedDefectAdapter(requireContext(), reportedDefects, reportedDefectsImages);
+    private void initDefectsRecycler(ArrayList<Defect2> reportedDefects) {
+        ReportedDefectAdapter adapter = new ReportedDefectAdapter(requireContext(), reportedDefects);
         binding.recyclerDefects.setAdapter(adapter);
         binding.recyclerDefects.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -145,11 +143,10 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
 
     private void goToAddDefectActivity() {
         Intent intent = new Intent(requireContext(), AddDefectActivity.class);
-//        someActivityResultLauncherForAddDefect.launch(intent);
         startActivity(intent);
     }
 
-    private void getData() {
+    private void getTextData() {
         // For getting the number of reported defects.
         fDatabase.addValueEventListener(valueEventListener1 = new ValueEventListener() {
             @Override
@@ -174,7 +171,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        // For getting the actual data.
+        // For getting the actual text data.
         fDatabase.addValueEventListener(valueEventListener2 = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -187,44 +184,21 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
                                 if (childSnapshot2.exists()) {
                                     String uuid = childSnapshot2.getKey();
 
-                                    Defect defect = new Defect(
+                                    Defect2 defect = new Defect2(
                                             childSnapshot2.child("location").getValue(String.class),
                                             childSnapshot2.child("category").getValue(String.class),
                                             childSnapshot2.child("description").getValue(String.class),
                                             childSnapshot2.child("likes").getValue(Integer.class),
                                             childSnapshot2.child("rate").getValue(Float.class),
                                             childSnapshot2.child("haveImage").getValue(Integer.class),
-                                            childSnapshot2.child("haveAudio").getValue(Integer.class)
+                                            childSnapshot2.child("haveAudio").getValue(Integer.class),
+                                            uuid,
+                                            email
                                     );
                                     itemsDefect.add(defect);
 
-                                    if (defect.getHaveImage() != 0) {
-                                        fStorage.child(email).child(uuid).child("images").child("image0").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri uri) {
-                                                itemsDefectImages.add(uri.toString());
-                                                numberOfGottenDefects++;
-                                                binding.txtReadyShowRecycler.setText(String.format("%d", numberOfGottenDefects));
-
-                                            }
-                                        });
-
-                                    } else {
-                                        fStorage.child("imageHolder.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri uri) {
-                                                itemsDefectImages.add(uri.toString());
-                                                numberOfGottenDefects++;
-                                                binding.txtReadyShowRecycler.setText(String.format("%d", numberOfGottenDefects));
-
-                                            }
-                                        });
-//                                        String imageHolderUrl = "https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png";
-//                                        itemsDefectImages.add(imageHolderUrl);
-//                                        numberOfGottenDefects++;
-//                                        binding.txtReadyShowRecycler.setText(String.format("%d", numberOfGottenDefects));
-
-                                    }
+                                    numberOfGottenDefects++;
+                                    binding.txtReadyShowRecycler.setText(numberOfGottenDefects + "");
 
                                 }
                             }
@@ -242,6 +216,43 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
                 binding.constLayoutListView.setVisibility(View.GONE);
             }
         });
+
+    }
+
+    private void getImageData() {
+        numberOfGottenDefects = 0;
+        binding.txtReadyShowRecycler.setText(numberOfGottenDefects + "");
+        showRecycler = true;
+
+        for (int i = 0; i < itemsDefect.size(); i++) {
+            Defect2 item = itemsDefect.get(i);
+
+            if (item.getHaveImage() != 0) {
+                // We have image
+                int witchItem = i;
+                fStorage.child(item.getEmail()).child(item.getUuid()).child("images").child("image0").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        if (!isDownloadCancelled) {
+                            item.setFirstImage(uri.toString());
+                            itemsDefect.set(witchItem, item);
+                            numberOfGottenDefects++;
+                            binding.txtReadyShowRecycler.setText(numberOfGottenDefects + "");
+
+                        }
+                    }
+                });
+
+            } else {
+                // We don't have image
+                String imageHolderUrl = "https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png";
+                item.setFirstImage(imageHolderUrl);
+                itemsDefect.set(i, item);
+                numberOfGottenDefects++;
+                binding.txtReadyShowRecycler.setText(numberOfGottenDefects + "");
+
+            }
+        }
 
     }
 

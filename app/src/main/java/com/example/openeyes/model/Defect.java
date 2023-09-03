@@ -6,16 +6,16 @@ import java.util.ArrayList;
 
 public class Defect {
 
-    private String location;
-    private double latitude;
-    private double longitude;
-    private String category;
-    private String description;
-    private String date;
-    private int likes;
-    private float rate;
-    private int haveImage; // (0 -> no image) - (anything but 0 -> number of images)
-    private int haveAudio; // (0 -> no audio) - (1 -> have audio)
+    protected String location;
+    protected double latitude;
+    protected double longitude;
+    protected String category;
+    protected String description;
+    protected String date;
+    protected int likes;
+    protected float rate;
+    protected int haveImage; // (0 -> no image) - (anything but 0 -> number of images)
+    protected int haveAudio; // (0 -> no audio) - (1 -> have audio)
 
 
     public Defect(String location, String category, String description, int likes, float rate, int haveImage, int haveAudio) {
