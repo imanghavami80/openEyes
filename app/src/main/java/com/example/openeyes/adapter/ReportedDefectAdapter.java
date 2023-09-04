@@ -1,6 +1,7 @@
 package com.example.openeyes.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ItemReportedDefectBinding;
 import com.example.openeyes.model.Defect2;
+import com.example.openeyes.view.activities.VoteDefectActivity;
 
 import java.util.ArrayList;
 
@@ -53,6 +55,14 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
             holder.binding.viewDefects3.setVisibility(View.VISIBLE);
         else
             holder.binding.viewDefects3.setVisibility(View.GONE);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, VoteDefectActivity.class));
+
+            }
+        });
 
     }
 

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.activities.VoteDefectActivity">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white_light"
+            app:layout_constraintBottom_toTopOf="@id/btnVoteDefect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarVoteDefect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbarVoteDefect"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white_light"
+                    android:elevation="@dimen/_5sdp"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:navigationIcon="@drawable/svg_back"
+                    app:title="@string/vote_defect"
+                    app:titleTextColor="@color/blue_dark_80" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedVoteSalon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appBarAddDefect">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txtVoteDefect1"
+                        style="@style/normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:gravity="center"
+                        android:text="@string/vote_defect_hint_1"
+                        android:textColor="@color/blue_dark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.9" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewVoteDefectSlider"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_180sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:backgroundTint="@color/white_light_2"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtVoteDefect1"
+                        app:layout_constraintWidth_percent="0.9"
+                        app:strokeColor="@color/blue_dark"
+                        app:strokeWidth="1dp">
+
+                        <com.denzcoskun.imageslider.ImageSlider
+                            android:id="@+id/imgSliderVoteDefect"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:iss_auto_cycle="true"
+                            app:iss_delay="2000"
+                            app:iss_period="2000"
+                            app:iss_placeholder="@drawable/png_image_holder"
+                            app:iss_selected_dot="@drawable/svg_selected_dot"
+                            app:iss_unselected_dot="@drawable/svg_unselected_dot" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/txtVoteDefectLocation"
+                        style="@style/normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:gravity="center|start"
+                        android:text="Grove street"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/blue_dark"
+                        android:textDirection="ltr"
+                        app:drawableStartCompat="@drawable/svg_location"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cardViewVoteDefectSlider"
+                        app:layout_constraintWidth_percent="0.9" />
+
+                    <TextView
+                        android:id="@+id/txtVoteDefectPerson"
+                        style="@style/normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:gravity="center|start"
+                        android:text="iman ghavami"
+                        android:textColor="@color/blue_dark"
+                        android:textDirection="ltr"
+                        app:drawableStartCompat="@drawable/svg_person"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtVoteDefectLocation"
+                        app:layout_constraintWidth_percent="0.9" />
+
+                    <TextView
+                        android:id="@+id/txtVoteDefectDate"
+                        style="@style/normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:gravity="center|start"
+                        android:text="may 2023 16:49"
+                        android:textColor="@color/blue_dark"
+                        android:textDirection="ltr"
+                        app:drawableStartCompat="@drawable/svg_date"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtVoteDefectPerson"
+                        app:layout_constraintWidth_percent="0.9" />
+
+                    <TextView
+                        android:id="@+id/txtVoteDefectCategory"
+                        style="@style/normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawablePadding="@dimen/_15sdp"
+                        android:gravity="center|start"
+                        android:text="Cover/Channel"
+                        android:textColor="@color/blue_dark"
+                        android:textDirection="ltr"
+                        app:drawableStartCompat="@drawable/svg_category_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtVoteDefectDate"
+                        app:layout_constraintWidth_percent="0.9" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtLayoutVoteDefectDescription"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:hint="@string/description"
+                        android:textColorHint="@color/blue_dark_80"
+                        app:boxStrokeColor="@color/blue_semi_dark"
+                        app:hintTextColor="@color/blue_dark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtVoteDefectCategory"
+                        app:layout_constraintWidth_percent="0.9">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtVoteDefectDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_slab_light"
+
+                            android:gravity="top"
+                            android:overScrollMode="never"
+                            android:selectAllOnFocus="true"
+                            android:textColor="@color/blue_dark" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/viewTxtLayoutVoteDefectDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="@id/txtLayoutVoteDefectDescription"
+                        app:layout_constraintEnd_toEndOf="@id/txtLayoutVoteDefectDescription"
+                        app:layout_constraintStart_toStartOf="@id/txtLayoutVoteDefectDescription"
+                        app:layout_constraintTop_toTopOf="@id/txtLayoutVoteDefectDescription" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constLayoutVoteDefectRecordAudio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtLayoutVoteDefectDescription"
+                        app:layout_constraintWidth_percent="0.9">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/lottieAudioWaveVoteDefect"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_100sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:lottie_autoPlay="true"
+                            app:lottie_colorFilter="@color/blue_dark"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/audio" />
+
+                        <TextView
+                            android:id="@+id/txtAudioRecorderTimeVoteDefect"
+                            style="@style/form_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero_time"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/lottieAudioWaveVoteDefect" />
+
+                        <ImageView
+                            android:id="@+id/imgPlayAudioVoteDefect"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/svg_play"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/imgPauseAudioVoteDefect"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtAudioRecorderTimeVoteDefect" />
+
+                        <ImageView
+                            android:id="@+id/imgPauseAudioVoteDefect"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:src="@drawable/svg_pause"
+                            app:layout_constraintBottom_toBottomOf="@id/imgPlayAudioVoteDefect"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/imgPlayAudioVoteDefect"
+                            app:layout_constraintTop_toTopOf="@id/imgPlayAudioVoteDefect" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.willy.ratingbar.ScaleRatingBar
+                        android:id="@+id/ratingBarVoteDefect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/constLayoutVoteDefectRecordAudio"
+                        app:srb_clearRatingEnabled="true"
+                        app:srb_clickable="true"
+                        app:srb_drawableEmpty="@drawable/svg_star_empty"
+                        app:srb_drawableFilled="@drawable/svg_star_fill"
+                        app:srb_isIndicator="false"
+                        app:srb_numStars="4"
+                        app:srb_scrollable="true"
+                        app:srb_starHeight="@dimen/_30sdp"
+                        app:srb_starPadding="0dp"
+                        app:srb_starWidth="@dimen/_30sdp"
+                        app:srb_stepSize="1" />
+
+                    <TextView
+                        android:id="@+id/txtVoteDefectNumber"
+                        style="@style/normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:gravity="center"
+                        android:text="Votes: 25"
+                        android:textColor="@color/blue_dark"
+                        android:textDirection="ltr"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ratingBarVoteDefect" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtVoteDefectNumber" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <Button
+            android:id="@+id/btnVoteDefect"
+            style="@style/FilledButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_shape_blue"
+            android:text="@string/vote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayoutVoteDefectLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_80"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressBarVoteDefect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:indicatorColor="@color/blue_semi_dark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

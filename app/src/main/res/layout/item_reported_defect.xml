@@ -77,9 +77,9 @@
                         app:srb_isIndicator="false"
                         app:srb_numStars="4"
                         app:srb_scrollable="false"
-                        app:srb_starHeight="@dimen/_15sdp"
+                        app:srb_starHeight="@dimen/_20sdp"
                         app:srb_starPadding="0dp"
-                        app:srb_starWidth="@dimen/_15sdp"
+                        app:srb_starWidth="@dimen/_20sdp"
                         app:srb_stepSize="0.1" />
 
                     <TextView
