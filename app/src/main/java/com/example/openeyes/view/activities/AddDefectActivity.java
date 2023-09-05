@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -466,6 +467,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             String defectUUID = randomId;
             String defectDate = getCurrentDate();
             String userEmail = mySharedPreferences.getEncodedUserEmail();
+            String userNickName = mySharedPreferences.getUserNickName();
             int haveAudio = 0;
             int haveImage = 0;
 
@@ -478,7 +480,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             haveImage = itemsDefectImages.size();
 
             // Saving other details.
-            Defect newDefect = new Defect(defectAddress, lat, lon, defectCategory, defectDescription, defectDate, 0, 0.0f, haveImage, haveAudio);
+            Defect newDefect = new Defect(defectAddress, lat, lon, defectCategory, defectDescription, userNickName, defectDate, 0, 0.0f, haveImage, haveAudio);
 
             // We have to store the data level by level. Others -(if successful)-> audio -(if successful)-> images.
             fDatabase.child(userEmail).child(defectUUID).setValue(newDefect).addOnCompleteListener(new OnCompleteListener<Void>() {

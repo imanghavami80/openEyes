@@ -11,6 +11,7 @@ public class Defect {
     protected double longitude;
     protected String category;
     protected String description;
+    protected String nickName;
     protected String date;
     protected int likes;
     protected float rate;
@@ -28,12 +29,13 @@ public class Defect {
         this.haveAudio = haveAudio;
     }
 
-    public Defect(String location, double latitude, double longitude, String category, String description, String date, int likes, float rate, int haveImage, int haveAudio) {
+    public Defect(String location, double latitude, double longitude, String category, String description, String nickName, String date, int likes, float rate, int haveImage, int haveAudio) {
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
         this.category = category;
         this.description = description;
+        this.nickName = nickName;
         this.date = date;
         this.likes = likes;
         this.rate = rate;
@@ -79,6 +81,14 @@ public class Defect {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getDate() {

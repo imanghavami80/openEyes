@@ -86,8 +86,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:iss_auto_cycle="true"
-                            app:iss_delay="2000"
-                            app:iss_period="2000"
+                            app:iss_delay="1000"
+                            app:iss_period="1000"
                             app:iss_placeholder="@drawable/png_image_holder"
                             app:iss_selected_dot="@drawable/svg_selected_dot"
                             app:iss_unselected_dot="@drawable/svg_unselected_dot" />
@@ -102,7 +102,6 @@
                         android:layout_marginTop="@dimen/_14sdp"
                         android:drawablePadding="@dimen/_15sdp"
                         android:gravity="center|start"
-                        android:text="Grove street"
                         android:textAlignment="textStart"
                         android:textColor="@color/blue_dark"
                         android:textDirection="ltr"
@@ -120,7 +119,6 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:drawablePadding="@dimen/_15sdp"
                         android:gravity="center|start"
-                        android:text="iman ghavami"
                         android:textColor="@color/blue_dark"
                         android:textDirection="ltr"
                         app:drawableStartCompat="@drawable/svg_person"
@@ -137,7 +135,6 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:drawablePadding="@dimen/_15sdp"
                         android:gravity="center|start"
-                        android:text="may 2023 16:49"
                         android:textColor="@color/blue_dark"
                         android:textDirection="ltr"
                         app:drawableStartCompat="@drawable/svg_date"
@@ -154,7 +151,6 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:drawablePadding="@dimen/_15sdp"
                         android:gravity="center|start"
-                        android:text="Cover/Channel"
                         android:textColor="@color/blue_dark"
                         android:textDirection="ltr"
                         app:drawableStartCompat="@drawable/svg_category_2"
@@ -183,7 +179,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_slab_light"
-
                             android:gravity="top"
                             android:overScrollMode="never"
                             android:selectAllOnFocus="true"
@@ -232,28 +227,16 @@
                             app:layout_constraintTop_toBottomOf="@id/lottieAudioWaveVoteDefect" />
 
                         <ImageView
-                            android:id="@+id/imgPlayAudioVoteDefect"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
+                            android:id="@+id/imgPlayPauseAudioVoteDefect"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginHorizontal="@dimen/_20sdp"
                             android:layout_marginTop="@dimen/_20sdp"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:src="@drawable/svg_play"
+                            android:src="@drawable/svg_play_circle"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/imgPauseAudioVoteDefect"
-                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtAudioRecorderTimeVoteDefect" />
-
-                        <ImageView
-                            android:id="@+id/imgPauseAudioVoteDefect"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:src="@drawable/svg_pause"
-                            app:layout_constraintBottom_toBottomOf="@id/imgPlayAudioVoteDefect"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/imgPlayAudioVoteDefect"
-                            app:layout_constraintTop_toTopOf="@id/imgPlayAudioVoteDefect" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -321,7 +304,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black_80"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -337,6 +319,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtVoteDefectShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progressBarVoteDefect" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

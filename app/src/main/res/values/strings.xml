@@ -55,13 +55,14 @@
     <string name="map_view">Map View</string>
     <string name="list_view">List View</string>
     <string name="add_defect">Add Defect</string>
-    <string name="vote_defect">Vote Defect</string>
+    <string name="vote_defect">View &amp; Vote Defect</string>
     <string name="vote">Vote</string>
     <string name="pick">Pick</string>
     <string name="max_image_uploaded">You can only upload up to 3 images.</string>
     <string name="get_location">Get Location</string>
     <string name="upload_photos">Upload photos</string>
     <string name="zero_time">00:00</string>
+    <string name="submit_vote_error">There must be at least one star to submit a vote.</string>
     <string name="hold_to_delete">For deleting, hold on the image.</string>
     <string-array name="category">
         <item>Traffic lights</item>

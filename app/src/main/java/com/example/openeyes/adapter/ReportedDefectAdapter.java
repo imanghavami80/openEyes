@@ -59,7 +59,10 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, VoteDefectActivity.class));
+                Intent intent = new Intent(context, VoteDefectActivity.class);
+                intent.putExtra("uuid", item.getUuid());
+                intent.putExtra("email", item.getEmail());
+                context.startActivity(intent);
 
             }
         });
