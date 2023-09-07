@@ -2,6 +2,7 @@ package com.example.openeyes.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -21,6 +22,7 @@ import com.example.openeyes.R;
 import com.example.openeyes.databinding.FragmentMapBinding;
 import com.example.openeyes.utility.PermissionManager;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.example.openeyes.view.activities.VoteDefectActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +33,7 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import java.util.List;
@@ -98,42 +101,6 @@ public class MapFragment extends Fragment implements View.OnClickListener {
         mapController.setCenter(new GeoPoint(35.7443, 51.4435));
 
         fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
-        fDatabase.addValueEventListener(valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot childSnapshot1 : snapshot.getChildren()) {
-                        if (childSnapshot1.exists()) {
-                            for (DataSnapshot childSnapshot2 : childSnapshot1.getChildren()) {
-                                if (childSnapshot2.exists()) {
-                                    double lat = childSnapshot2.child("latitude").getValue(Double.class);
-                                    double lon = childSnapshot2.child("longitude").getValue(Double.class);
-
-                                    Marker marker = new Marker(binding.mapViewHome);
-                                    marker.setPosition(new GeoPoint(lat, lon));
-                                    marker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_defect_location));
-                                    binding.mapViewHome.getOverlays().add(marker);
-
-                                }
-                            }
-                        }
-                    }
-
-                    binding.constLayoutMapView.setVisibility(View.GONE);
-
-                } else {
-                    binding.constLayoutMapView.setVisibility(View.GONE);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                SnackBarHandler.snackBarHideAction3(requireContext(), binding.getRoot(), getString(R.string.error_occurred));
-                binding.constLayoutMapView.setVisibility(View.GONE);
-
-            }
-        });
 
         return binding.getRoot();
 
@@ -144,6 +111,7 @@ public class MapFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onPause() {
         super.onPause();
+
         fDatabase.removeEventListener(valueEventListener);
         binding.mapViewHome.onPause();
 
@@ -153,11 +121,12 @@ public class MapFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
+        binding.mapViewHome.onResume();
         if (!permissionManager.hasLocationPermission()) {
             permissionManager.requestLocationPermissions();
-        }
 
-        binding.mapViewHome.onResume();
+        }
+        getData();
 
     }
 
@@ -185,8 +154,6 @@ public class MapFragment extends Fragment implements View.OnClickListener {
 
                             } catch (Exception e) {
                             }
-
-
                         }
                     });
 
@@ -208,6 +175,70 @@ public class MapFragment extends Fragment implements View.OnClickListener {
     public boolean isGpsEnable() {
         LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+    }
+
+    private void getData() {
+        fDatabase.addValueEventListener(valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot childSnapshot1 : snapshot.getChildren()) {
+                        if (childSnapshot1.exists()) {
+                            String email = childSnapshot1.getKey();
+
+                            for (DataSnapshot childSnapshot2 : childSnapshot1.getChildren()) {
+                                if (childSnapshot2.exists()) {
+                                    String uuid = childSnapshot2.getKey();
+
+                                    double lat = childSnapshot2.child("latitude").getValue(Double.class);
+                                    double lon = childSnapshot2.child("longitude").getValue(Double.class);
+
+                                    Marker marker = new Marker(binding.mapViewHome);
+                                    marker.setPosition(new GeoPoint(lat, lon));
+                                    marker.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.svg_defect_location));
+                                    binding.mapViewHome.getOverlays().add(marker);
+
+                                    marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                                        @Override
+                                        public boolean onMarkerClick(Marker marker, MapView mapView) {
+                                            goToVoteDefectActivity(email, uuid);
+
+                                            return true;
+                                        }
+                                    });
+
+                                }
+                            }
+                        }
+                    }
+
+                    binding.constLayoutMapView.setVisibility(View.GONE);
+
+                } else {
+                    binding.constLayoutMapView.setVisibility(View.GONE);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                SnackBarHandler.snackBarHideAction3(requireContext(), binding.getRoot(), getString(R.string.error_occurred));
+                binding.constLayoutMapView.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+    private void goToVoteDefectActivity(String defectEmail, String defectUuid) {
+        Intent intent = new Intent(requireContext(), VoteDefectActivity.class);
+        intent.putExtra("email", defectEmail);
+        intent.putExtra("uuid", defectUuid);
+        startActivity(intent);
+        requireActivity().overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
 
     }
 

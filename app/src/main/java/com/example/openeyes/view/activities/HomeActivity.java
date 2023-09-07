@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivityHomeBinding;
 import com.example.openeyes.view.fragments.DefectsFragment;

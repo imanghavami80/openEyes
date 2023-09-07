@@ -36,7 +36,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
 
-import java.io.IOException;
 import java.util.List;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -63,6 +62,7 @@ public class GetLocationActivity extends AppCompatActivity implements View.OnCli
 
         binding.cardViewGetLocationGps.setOnClickListener(this);
         binding.fabGetLocation.setOnClickListener(this);
+        binding.constLayoutGetLocation.setOnClickListener(null);
         binding.toolbarGetLocation.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,11 +140,22 @@ public class GetLocationActivity extends AppCompatActivity implements View.OnCli
     /****************************************************/
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (queue != null) {
+            queue.cancelAll(TAG);
+
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         if (view.getId() == binding.cardViewGetLocationGps.getId()) {
             setCurrentLocation();
 
         } else if (view.getId() == binding.fabGetLocation.getId()) {
+            binding.constLayoutGetLocation.setVisibility(View.VISIBLE);
             getLocationAddress(selectedLocationMarker.getPosition().getLatitude(), selectedLocationMarker.getPosition().getLongitude());
 
         }
@@ -226,21 +237,12 @@ public class GetLocationActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onErrorResponse(VolleyError error) {
                 SnackBarHandler.snackBarHideAction3(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
+                binding.constLayoutGetLocation.setVisibility(View.GONE);
 
             }
         });
 
         queue.add(jsonObjectRequest);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (queue != null) {
-            queue.cancelAll(TAG);
-
-        }
     }
 
 }

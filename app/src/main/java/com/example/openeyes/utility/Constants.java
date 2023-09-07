@@ -1,7 +1,5 @@
 package com.example.openeyes.utility;
 
-import java.io.File;
-
 public class Constants {
     // Splash timer
     public static final long SPLASH_DISPLAY_LENGTH = 2000;

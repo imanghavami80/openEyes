@@ -2,10 +2,12 @@ package com.example.openeyes.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivitySplashBinding;
 import com.example.openeyes.utility.Constants;
@@ -53,7 +55,10 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private void goToHomeActivity() {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.fade_in_new,
+                R.anim.fade_out_new
+        );
         finish();
 
     }
@@ -61,7 +66,10 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private void goToSignInActivity() {
         Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
         finish();
 
     }
@@ -69,7 +77,10 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private void goToSignUpActivity() {
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
         finish();
 
     }

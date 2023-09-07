@@ -1,15 +1,9 @@
 package com.example.openeyes.view.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -17,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +21,7 @@ import com.example.openeyes.databinding.FragmentDefectsBinding;
 import com.example.openeyes.model.Defect2;
 import com.example.openeyes.utility.SnackBarHandler;
 import com.example.openeyes.view.activities.AddDefectActivity;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,7 +45,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
     private int numberOfReportedDefects = 0;
     private int numberOfGottenDefects = 0;
     private boolean showRecycler = false;
-    private boolean isDownloadCancelled  = false;
+    private boolean isDownloadCancelled = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +54,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_defects, container, false);
 
@@ -144,6 +137,11 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
     private void goToAddDefectActivity() {
         Intent intent = new Intent(requireContext(), AddDefectActivity.class);
         startActivity(intent);
+        requireActivity().overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
+
     }
 
     private void getTextData() {
@@ -167,6 +165,8 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                SnackBarHandler.snackBarHideAction3(requireContext(), binding.getRoot(), getString(R.string.error_occurred));
+                binding.constLayoutListView.setVisibility(View.GONE);
 
             }
         });
@@ -184,17 +184,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
                                 if (childSnapshot2.exists()) {
                                     String uuid = childSnapshot2.getKey();
 
-                                    Defect2 defect = new Defect2(
-                                            childSnapshot2.child("location").getValue(String.class),
-                                            childSnapshot2.child("category").getValue(String.class),
-                                            childSnapshot2.child("description").getValue(String.class),
-                                            childSnapshot2.child("likes").getValue(Integer.class),
-                                            childSnapshot2.child("rate").getValue(Float.class),
-                                            childSnapshot2.child("haveImage").getValue(Integer.class),
-                                            childSnapshot2.child("haveAudio").getValue(Integer.class),
-                                            uuid,
-                                            email
-                                    );
+                                    Defect2 defect = new Defect2(childSnapshot2.child("location").getValue(String.class), childSnapshot2.child("category").getValue(String.class), childSnapshot2.child("description").getValue(String.class), childSnapshot2.child("likes").getValue(Integer.class), childSnapshot2.child("rate").getValue(Float.class), childSnapshot2.child("haveImage").getValue(Integer.class), childSnapshot2.child("haveAudio").getValue(Integer.class), uuid, email);
                                     itemsDefect.add(defect);
 
                                     numberOfGottenDefects++;
@@ -240,6 +230,13 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
                             binding.txtReadyShowRecycler.setText(numberOfGottenDefects + "");
 
                         }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        SnackBarHandler.snackBarHideAction3(requireContext(), binding.getRoot(), getString(R.string.error_occurred));
+                        binding.constLayoutListView.setVisibility(View.GONE);
+
                     }
                 });
 

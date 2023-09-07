@@ -3,12 +3,14 @@ package com.example.openeyes.view.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
+
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivitySignUpBinding;
 import com.example.openeyes.model.User;
@@ -21,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
@@ -56,7 +59,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void goToHomeActivity() {
         Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.fade_in_new,
+                R.anim.fade_out_new
+        );
         finish();
 
     }
@@ -64,7 +70,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void goToSignInActivity() {
         Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
         finish();
 
     }

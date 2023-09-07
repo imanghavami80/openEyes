@@ -18,7 +18,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -67,7 +66,6 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
     private Uri capturedImageUri;
     private double lat, lon = 0.0;
     private final String randomId = UUID.randomUUID().toString();
-    ;
 
 
     @Override
@@ -265,6 +263,10 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
     private void goToGetLocationActivity() {
         Intent intent = new Intent(AddDefectActivity.this, GetLocationActivity.class);
         someActivityResultLauncherForMap.launch(intent);
+        overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
 
     }
 
@@ -503,7 +505,10 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                                         if (task.isSuccessful()) {
                                                             binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
-                                                            binding.btnAddDefect.setEnabled(false);
+                                                            overridePendingTransition(
+                                                                    R.anim.slide_in_left,
+                                                                    R.anim.slide_out_right
+                                                            );
                                                             finish();
 
                                                         } else {
@@ -532,6 +537,10 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                         if (task.isSuccessful()) {
                                             binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                                            overridePendingTransition(
+                                                    R.anim.slide_in_left,
+                                                    R.anim.slide_out_right
+                                            );
                                             finish();
 
                                         } else {
@@ -545,6 +554,10 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                             }
                         } else {
                             binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                            overridePendingTransition(
+                                    R.anim.slide_in_left,
+                                    R.anim.slide_out_right
+                            );
                             finish();
 
                         }

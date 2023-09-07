@@ -3,12 +3,14 @@ package com.example.openeyes.view.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
+
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivitySignInBinding;
 import com.example.openeyes.model.User;
@@ -26,12 +28,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.Objects;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MySharedPreferences mySharedPreferences;
     private ActivitySignInBinding binding;
+    private DatabaseReference fReference;
+    private ValueEventListener valueEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     /****************************************************/
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (fReference != null)
+            fReference.removeEventListener(valueEventListener);
+    }
 
     @Override
     public void onClick(View view) {
@@ -65,7 +78,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void goToForgotPassActivity() {
         Intent intent = new Intent(SignInActivity.this, ForgotPassActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
         finish();
 
     }
@@ -73,7 +89,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void goToSignUpActivity() {
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
         finish();
 
     }
@@ -81,7 +100,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void goToHomeActivity() {
         Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.fade_in_new,
+                R.anim.fade_out_new
+        );
         finish();
 
     }
@@ -186,7 +208,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             String encodedEmail = enteredEmail.replace(".", ",").replace("@", "-");
 
             FirebaseAuth fAuth = FirebaseAuth.getInstance();
-            DatabaseReference fReference = FirebaseDatabase.getInstance().getReference("User");
+            fReference = FirebaseDatabase.getInstance().getReference("User");
 
             fAuth.signInWithEmailAndPassword(enteredEmail, enteredPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -194,7 +216,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     if (task.isSuccessful()) {
                         // We have to get all user information to show it to save it in shared preferences.
                         Query checkUser = fReference.orderByChild(Constants.USER_EMAIL).equalTo(encodedEmail);
-                        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                        checkUser.addValueEventListener(valueEventListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {

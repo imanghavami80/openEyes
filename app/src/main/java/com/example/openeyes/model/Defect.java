@@ -1,9 +1,5 @@
 package com.example.openeyes.model;
 
-import android.net.Uri;
-
-import java.util.ArrayList;
-
 public class Defect {
 
     protected String location;

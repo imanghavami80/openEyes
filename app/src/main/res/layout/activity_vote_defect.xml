@@ -86,8 +86,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:iss_auto_cycle="true"
-                            app:iss_delay="1000"
-                            app:iss_period="1000"
+                            app:iss_delay="1500"
+                            app:iss_period="1500"
                             app:iss_placeholder="@drawable/png_image_holder"
                             app:iss_selected_dot="@drawable/svg_selected_dot"
                             app:iss_unselected_dot="@drawable/svg_unselected_dot" />

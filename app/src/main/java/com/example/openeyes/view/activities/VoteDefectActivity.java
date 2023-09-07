@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -20,18 +19,17 @@ import com.example.openeyes.databinding.ActivityVoteDefectBinding;
 import com.example.openeyes.recorder.AndroidAudioPlayer;
 import com.example.openeyes.utility.MySharedPreferences;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -244,10 +242,28 @@ public class VoteDefectActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void onSuccess(Void unused) {
                                 binding.constLayoutVoteDefectLoading.setVisibility(View.GONE);
+                                overridePendingTransition(
+                                        R.anim.slide_in_left,
+                                        R.anim.slide_out_right
+                                );
                                 finish();
 
                             }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
+                                binding.constLayoutVoteDefectLoading.setVisibility(View.GONE);
+
+                            }
                         });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
+                        binding.constLayoutVoteDefectLoading.setVisibility(View.GONE);
+
                     }
                 });
 
@@ -310,6 +326,7 @@ public class VoteDefectActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 binding.lottieAudioWaveVoteDefect.pauseAnimation();
+                binding.imgPlayPauseAudioVoteDefect.setImageDrawable(getDrawable(R.drawable.svg_play_circle));
                 isPlaying = false;
                 binding.txtAudioRecorderTimeVoteDefect.setText(prepareTimeText(getAudioDurationInSeconds(audioUrl)));
 

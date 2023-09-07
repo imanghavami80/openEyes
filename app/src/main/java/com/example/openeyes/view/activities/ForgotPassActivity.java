@@ -3,12 +3,14 @@ package com.example.openeyes.view.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
+
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivityForgotPassBinding;
 import com.example.openeyes.utility.SnackBarHandler;
@@ -16,11 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Objects;
 
 public class ForgotPassActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ActivityForgotPassBinding binding;
+    private ActivityForgotPassBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +56,11 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
     private void goToSignInActivity() {
         Intent intent = new Intent(ForgotPassActivity.this, SignInActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+        );
         finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
     }
 
