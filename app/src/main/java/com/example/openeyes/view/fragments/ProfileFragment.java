@@ -17,6 +17,7 @@ import com.example.openeyes.R;
 import com.example.openeyes.databinding.FragmentProfileBinding;
 import com.example.openeyes.utility.MySharedPreferences;
 import com.example.openeyes.view.activities.ContactUsActivity;
+import com.example.openeyes.view.activities.MyDefectsActivity;
 import com.example.openeyes.view.activities.SplashActivity;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -37,6 +38,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         binding.constLayoutLogoutProfile.setOnClickListener(this);
         binding.constLayoutContactUsProfile.setOnClickListener(this);
+        binding.constLayoutMyDefectsProfile.setOnClickListener(this);
 
         sharedPreferences = new MySharedPreferences(requireContext());
 
@@ -56,8 +58,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         } else if (view.getId() == binding.constLayoutContactUsProfile.getId()) {
             goToContactUsActivity();
 
-        }
+        } else if (view.getId() == binding.constLayoutMyDefectsProfile.getId()) {
+            goToMyDefectsActivity();
 
+        }
     }
 
     private void goToSplashActivity() {
@@ -73,6 +77,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void goToContactUsActivity() {
         Intent intent = new Intent(requireContext(), ContactUsActivity.class);
+        startActivity(intent);
+        requireActivity().overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+        );
+
+    }
+
+    private void goToMyDefectsActivity() {
+        Intent intent = new Intent(requireContext(), MyDefectsActivity.class);
         startActivity(intent);
         requireActivity().overridePendingTransition(
                 R.anim.slide_in_right,

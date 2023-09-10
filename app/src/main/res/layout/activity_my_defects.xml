@@ -7,10 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_light"
-        tools:context=".view.fragments.DefectsFragment">
+        tools:context=".view.activities.MyDefectsActivity">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarListView"
+            android:id="@+id/appBarMyDefects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="@dimen/_5sdp"
@@ -19,13 +19,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbarMapView"
+                android:id="@+id/toolbarMyDefects"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white_light"
                 android:elevation="@dimen/_5sdp"
-                app:title="@string/list_view"
-                app:titleCentered="true"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:navigationIcon="@drawable/svg_back"
+                app:title="@string/my_defects_2"
                 app:titleTextColor="@color/blue_dark_80" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -36,33 +37,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarListView">
+            app:layout_constraintTop_toBottomOf="@id/appBarMyDefects">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerDefects"
+                android:id="@+id/recyclerMyDefects"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/fabAddDefect"
-                style="@style/normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_60sdp"
-                android:text="@string/add_defect"
-                android:textColor="@color/white_light"
-                android:textSize="@dimen/_10sdp"
-                app:backgroundTint="@color/blue_dark"
-                app:icon="@drawable/svg_add"
-                app:iconTint="@color/white_light"
-                app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constLayoutListView"
+            android:id="@+id/constLayoutMyDefectsLoading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black_80"
@@ -73,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/progressBarListView"
+                android:id="@+id/progressBarMyDefects"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
@@ -84,18 +69,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtReadyShowRecycler"
+                android:id="@+id/txtReadyShowRecyclerMyDefects"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/progressBarListView" />
+                app:layout_constraintTop_toBottomOf="@id/progressBarMyDefects" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constLayoutNullDefects"
+            android:id="@+id/constLayoutNullMyDefects"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
@@ -116,12 +101,12 @@
                 app:layout_constraintWidth_percent=".8">
 
                 <ImageView
-                    android:id="@+id/imgNullDefect"
+                    android:id="@+id/imgNullMyDefect"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:src="@drawable/svg_add_defect"
-                    app:layout_constraintBottom_toTopOf="@id/txtNoDefectExist"
+                    app:layout_constraintBottom_toTopOf="@id/txtNoMyDefectExist"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -130,7 +115,7 @@
                     app:tint="@color/gray2" />
 
                 <TextView
-                    android:id="@+id/txtNoDefectExist"
+                    android:id="@+id/txtNoMyDefectExist"
                     style="@style/normal"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -141,7 +126,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent=".1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imgNullDefect" />
+                    app:layout_constraintTop_toBottomOf="@+id/imgNullMyDefect" />
 
                 <TextView
                     android:id="@+id/txtAddNewDefect"
@@ -149,7 +134,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center"
-                    android:text="@string/add_new_defect"
+                    android:text="@string/add_new_defect_2"
                     android:textColor="@color/blue_dark"
                     app:autoSizeMaxTextSize="@dimen/_12ssp"
                     app:autoSizeMinTextSize="@dimen/_3ssp"
@@ -158,7 +143,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent=".16"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtNoDefectExist" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtNoMyDefectExist" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

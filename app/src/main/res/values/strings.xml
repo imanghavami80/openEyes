@@ -43,6 +43,7 @@
     <string name="gps_not_enable">Please enable GPS first.</string>
     <string name="error">ERROR.  </string>
     <string name="error_occurred">An error occurred. please try again later.</string>
+    <string name="defect_deleted">Defect deleted successfully.</string>
     <string name="error_empty_field">This field can\'t be empty</string>
     <string name="error_category_not_accepted">Only the given categories are acceptable</string>
     <string name="error_short_password">Password must be at least 6 characters.</string>
@@ -57,6 +58,10 @@
     <string name="map_view">Map View</string>
     <string name="list_view">List View</string>
     <string name="my_defects">My defects</string>
+    <string name="no_defect">No defects have been reported.</string>
+    <string name="add_new_defect">To report your first defect, please press on add defect button below.</string>
+    <string name="add_new_defect_2">To report your first defect, please press on add defect button in list view page.</string>
+    <string name="my_defects_2">My Defects</string>
     <string name="contact_us">Contact us</string>
     <string name="logout_account">Logout of your account</string>
     <string name="add_defect">Add Defect</string>

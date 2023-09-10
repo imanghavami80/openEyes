@@ -37,7 +37,6 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
 
     private FragmentDefectsBinding binding;
     private ArrayList<Defect2> itemsDefect = new ArrayList<>();
-    ;
     private StorageReference fStorage;
     private DatabaseReference fDatabase;
     private ValueEventListener valueEventListener1;
@@ -114,6 +113,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         binding.constLayoutListView.setVisibility(View.VISIBLE);
+        binding.constLayoutNullDefects.setVisibility(View.GONE);
         isDownloadCancelled = false;
         getTextData();
 
@@ -196,6 +196,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
                     }
                 } else {
                     binding.constLayoutListView.setVisibility(View.GONE);
+                    binding.constLayoutNullDefects.setVisibility(View.VISIBLE);
 
                 }
             }
