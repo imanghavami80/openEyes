@@ -27,6 +27,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
+            android:name=".view.activities.ContactUsActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activities.VoteDefectActivity"
             android:exported="false" />
         <activity

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Open Eyes</string>
     <string name="company_name">IAAI Challenge Mapping</string>
+    <string name="company_email">about@openeyes.com</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="submit">Submit</string>
@@ -22,6 +23,7 @@
     <string name="enter_name_hint">Full name</string>
     <string name="enter_nickname_hint">Nickname</string>
     <string name="reset_password">Reset Password</string>
+    <string name="contact_us_hint_1">If there is any criticism or suggestion, contact the email below:</string>
     <string name="add_defect_hint_1">Report what you have detected in your city to share the problem with others.</string>
     <string name="vote_defect_hint_1">See the hole reported defect and also vote them in terms of importance in 4 level.</string>
     <string name="uploading">This may take a while, please be patient.</string>
@@ -54,7 +56,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="map_view">Map View</string>
     <string name="list_view">List View</string>
+    <string name="my_defects">My defects</string>
+    <string name="contact_us">Contact us</string>
+    <string name="logout_account">Logout of your account</string>
     <string name="add_defect">Add Defect</string>
+    <string name="contact_us_2">Contact Us</string>
     <string name="vote_defect">View &amp; Vote Defect</string>
     <string name="vote">Vote</string>
     <string name="pick">Pick</string>

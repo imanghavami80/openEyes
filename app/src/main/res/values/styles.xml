@@ -18,6 +18,12 @@
         <item name="android:textSize">@dimen/_12ssp</item>
     </style>
 
+    <style name="normal2">
+        <item name="android:fontFamily">@font/roboto_slab_medium</item>
+        <item name="android:textColor">@color/blue_dark</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+    </style>
+
     <style name="home_header">
         <item name="android:fontFamily">@font/roboto_slab_medium</item>
         <item name="android:textColor">@color/blue_dark_80</item>
