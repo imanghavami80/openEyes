@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,6 @@ public class MyDefectsAdapter extends RecyclerView.Adapter<MyDefectsAdapter.View
     @Override
     public void onBindViewHolder(@NonNull MyDefectsAdapter.ViewHolder holder, int position) {
         Defect2 item = items.get(position);
-        Log.e("rrr", "onBindViewHolder: " + items.size());
         holder.binding.ratingBarReportedDefect.setRating(item.getRate());
         holder.binding.txtReportedDefectLikes.setText(item.getLikes() + "");
         holder.binding.txtReportedDefectCategory.setText(item.getCategory());
@@ -70,8 +68,7 @@ public class MyDefectsAdapter extends RecyclerView.Adapter<MyDefectsAdapter.View
         holder.binding.imgDeleteDefect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean haveData = item.getHaveImage() != 0 || item.getHaveAudio() != 0;
-                showDeleteDialog(item.getUuid(), haveData);
+                showDeleteDialog(item.getUuid(), item.getHaveImage(), item.getHaveAudio());
 
             }
         });
@@ -98,15 +95,15 @@ public class MyDefectsAdapter extends RecyclerView.Adapter<MyDefectsAdapter.View
     }
 
     public interface OnItemClickListener {
-        void onDeleteItemClicked(String defectUuid, boolean haveDataInStorage);
+        void onDeleteItemClicked(String defectUuid, int haveImage, int haveAudio);
     }
 
-    private void showDeleteDialog(String defectUuid, boolean haveDataInStorage) {
+    private void showDeleteDialog(String defectUuid, int haveImage, int haveAudio) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setMessage("Do you want to delete this defect?");
         builder.setCancelable(true);
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-            this.listener.onDeleteItemClicked(defectUuid, haveDataInStorage);
+            this.listener.onDeleteItemClicked(defectUuid, haveImage, haveAudio);
 
         });
         builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {

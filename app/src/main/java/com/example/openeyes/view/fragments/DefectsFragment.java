@@ -115,6 +115,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
         binding.constLayoutListView.setVisibility(View.VISIBLE);
         binding.constLayoutNullDefects.setVisibility(View.GONE);
         isDownloadCancelled = false;
+
         getTextData();
 
     }
@@ -184,7 +185,17 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
                                 if (childSnapshot2.exists()) {
                                     String uuid = childSnapshot2.getKey();
 
-                                    Defect2 defect = new Defect2(childSnapshot2.child("location").getValue(String.class), childSnapshot2.child("category").getValue(String.class), childSnapshot2.child("description").getValue(String.class), childSnapshot2.child("likes").getValue(Integer.class), childSnapshot2.child("rate").getValue(Float.class), childSnapshot2.child("haveImage").getValue(Integer.class), childSnapshot2.child("haveAudio").getValue(Integer.class), uuid, email);
+                                    Defect2 defect = new Defect2(
+                                            childSnapshot2.child("location").getValue(String.class),
+                                            childSnapshot2.child("category").getValue(String.class),
+                                            childSnapshot2.child("description").getValue(String.class),
+                                            childSnapshot2.child("likes").getValue(Integer.class),
+                                            childSnapshot2.child("rate").getValue(Float.class),
+                                            childSnapshot2.child("haveImage").getValue(Integer.class),
+                                            childSnapshot2.child("haveAudio").getValue(Integer.class),
+                                            uuid,
+                                            email
+                                    );
                                     itemsDefect.add(defect);
 
                                     numberOfGottenDefects++;

@@ -231,8 +231,8 @@ public class VoteDefectActivity extends AppCompatActivity implements View.OnClic
             if (binding.ratingBarVoteDefect.getNumStars() != 0) {
                 binding.constLayoutVoteDefectLoading.setVisibility(View.VISIBLE);
                 Map<String, Object> updates = new HashMap<>();
+                rate = calculateRate(rate, likes, (int) binding.ratingBarVoteDefect.getRating());
                 likes++;
-                rate = calculateRate(rate, likes, binding.ratingBarVoteDefect.getNumStars());
                 updates.put("likes", likes);
                 updates.put("rate", rate);
                 fDatabase.child("Defect").child(defectEmail).child(defectUuid).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {

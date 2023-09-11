@@ -92,7 +92,7 @@ public class MyDefectsActivity extends AppCompatActivity {
         });
 
         fStorage = FirebaseStorage.getInstance().getReference();
-        fDatabase = FirebaseDatabase.getInstance().getReference("Defect");
+        fDatabase = FirebaseDatabase.getInstance().getReference();
 
     }
 
@@ -144,30 +144,34 @@ public class MyDefectsActivity extends AppCompatActivity {
     private void initDefectsRecycler(ArrayList<Defect2> reportedDefects) {
         MyDefectsAdapter adapter = new MyDefectsAdapter(this, reportedDefects, new MyDefectsAdapter.OnItemClickListener() {
             @Override
-            public void onDeleteItemClicked(String defectUuid, boolean haveDataInStorage) {
-                fDatabase.child(userEmail).child(defectUuid).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            public void onDeleteItemClicked(String defectUuid, int haveImage, int haveAudio) {
+                // Delete from defect table in real time database.
+                fDatabase.child("Defect").child(userEmail).child(defectUuid).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            if (haveDataInStorage) {
-                                fStorage.child(userEmail).child(defectUuid).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            SnackBarHandler.snackBarHideAction3(getApplicationContext(), binding.getRoot(), getString(R.string.defect_deleted));
-                                            reload();
+                            // Delete from userDefect table in real time database.
+                            fDatabase.child("UserDefect").child(defectUuid).removeValue();
 
-                                        } else {
-                                            SnackBarHandler.snackBarHideAction3(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
-
-                                        }
-                                    }
-                                });
-                            } else {
-                                SnackBarHandler.snackBarHideAction3(getApplicationContext(), binding.getRoot(), getString(R.string.defect_deleted));
-                                reload();
+                            // Delete other data like image and audio in storage.
+                            if (haveAudio != 0) {
+                                fStorage.child(userEmail).child(defectUuid).child("audio").child("audioFile").delete();
 
                             }
+
+                            for (int i = 0; i < haveImage; i++) {
+                                fStorage.child(userEmail).child(defectUuid).child("images").child("image" + i).delete();
+
+                            }
+
+                            // Deleting the folders in storage.
+                            fStorage.child(userEmail).child(defectUuid).child("audio").delete();
+                            fStorage.child(userEmail).child(defectUuid).child("images").delete();
+                            fStorage.child(userEmail).child(defectUuid).delete();
+
+                            SnackBarHandler.snackBarHideAction3(getApplicationContext(), binding.getRoot(), getString(R.string.defect_deleted));
+                            reload();
+
 
                         } else {
                             SnackBarHandler.snackBarHideAction3(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
@@ -184,7 +188,7 @@ public class MyDefectsActivity extends AppCompatActivity {
 
     private void getTextData() {
         // For getting the number of reported defects.
-        fDatabase.child(userEmail).addValueEventListener(valueEventListener1 = new ValueEventListener() {
+        fDatabase.child("Defect").child(userEmail).addValueEventListener(valueEventListener1 = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -208,7 +212,7 @@ public class MyDefectsActivity extends AppCompatActivity {
         });
 
         // For getting the actual text data.
-        fDatabase.child(userEmail).addValueEventListener(valueEventListener2 = new ValueEventListener() {
+        fDatabase.child("Defect").child(userEmail).addValueEventListener(valueEventListener2 = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -225,7 +229,8 @@ public class MyDefectsActivity extends AppCompatActivity {
                                     childSnapshot1.child("haveImage").getValue(Integer.class),
                                     childSnapshot1.child("haveAudio").getValue(Integer.class),
                                     uuid,
-                                    userEmail);
+                                    userEmail
+                            );
                             itemsDefect.add(defect);
 
                             numberOfGottenDefects++;

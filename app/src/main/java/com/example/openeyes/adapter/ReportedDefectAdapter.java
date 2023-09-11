@@ -23,7 +23,6 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
     private Context context;
     private ArrayList<Defect2> items;
 
-
     public ReportedDefectAdapter(Context context, ArrayList<Defect2> items) {
         this.context = context;
         this.items = items;

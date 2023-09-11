@@ -66,6 +66,7 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
     private Uri capturedImageUri;
     private double lat, lon = 0.0;
     private final String randomId = UUID.randomUUID().toString();
+    private int numberOfUploadedPictures = 0;
 
 
     @Override
@@ -91,6 +92,32 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 onBackPressed();
+
+            }
+        });
+
+        binding.txtReadyFinishAddDefect.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().trim().equals(Integer.toString(itemsDefectImages.size()))) {
+                    binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                    overridePendingTransition(
+                            R.anim.slide_in_left,
+                            R.anim.slide_out_right
+                    );
+                    finish();
+
+                }
 
             }
         });
@@ -482,7 +509,19 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             haveImage = itemsDefectImages.size();
 
             // Saving other details.
-            Defect newDefect = new Defect(defectAddress, lat, lon, defectCategory, defectDescription, userNickName, defectDate, 0, 0.0f, haveImage, haveAudio);
+            Defect newDefect = new Defect(
+                    defectAddress,
+                    lat,
+                    lon,
+                    defectCategory,
+                    defectDescription,
+                    userNickName,
+                    defectDate,
+                    0,
+                    0.0f,
+                    haveImage,
+                    haveAudio
+            );
 
             // We have to store the data level by level. Others -(if successful)-> audio -(if successful)-> images.
             fDatabase.child(userEmail).child(defectUUID).setValue(newDefect).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -500,16 +539,12 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                                         // Saving the images.
                                         if (newDefect.getHaveImage() != 0) {
                                             for (int i = 0; i < itemsDefectImages.size(); i++) {
-                                                fStorage.child(defectUUID).child("images").child("image" + i).putFile(itemsDefectImages.get(0)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                                fStorage.child(defectUUID).child("images").child("image" + i).putFile(itemsDefectImages.get(i)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                                         if (task.isSuccessful()) {
-                                                            binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
-                                                            overridePendingTransition(
-                                                                    R.anim.slide_in_left,
-                                                                    R.anim.slide_out_right
-                                                            );
-                                                            finish();
+                                                            numberOfUploadedPictures++;
+                                                            binding.txtReadyFinishAddDefect.setText(numberOfUploadedPictures + "");
 
                                                         } else {
                                                             SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
@@ -532,16 +567,12 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                         } else if (newDefect.getHaveImage() != 0) {
                             // Saving the images.
                             for (int i = 0; i < itemsDefectImages.size(); i++) {
-                                fStorage.child(defectUUID).child("images").child("image" + i).putFile(itemsDefectImages.get(0)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                fStorage.child(defectUUID).child("images").child("image" + i).putFile(itemsDefectImages.get(i)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                         if (task.isSuccessful()) {
-                                            binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
-                                            overridePendingTransition(
-                                                    R.anim.slide_in_left,
-                                                    R.anim.slide_out_right
-                                            );
-                                            finish();
+                                            numberOfUploadedPictures++;
+                                            binding.txtReadyFinishAddDefect.setText(numberOfUploadedPictures + "");
 
                                         } else {
                                             SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));
