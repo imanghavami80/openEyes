@@ -17,6 +17,7 @@ import com.example.openeyes.model.User;
 import com.example.openeyes.utility.Constants;
 import com.example.openeyes.utility.MySharedPreferences;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.example.openeyes.utility.UiHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
@@ -199,6 +200,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         if (checkErrorEdtSignInEmail() && checkErrorEdtSignInPassword()) {
             // Set progress bar visible.
             binding.constLayoutSignInProgress.setVisibility(View.VISIBLE);
+
+            // Closing the keyboard.
+            UiHandler.keyboardDown(binding.edtSignInEmail, SignInActivity.this);
 
             // Getting what user has entered.
             String enteredEmail = binding.edtSignInEmail.getText().toString().trim();

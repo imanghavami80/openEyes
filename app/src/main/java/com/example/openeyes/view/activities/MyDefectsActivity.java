@@ -1,5 +1,9 @@
 package com.example.openeyes.view.activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -29,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.j256.ormlite.stmt.query.In;
 
 import java.util.ArrayList;
 
@@ -46,6 +51,7 @@ public class MyDefectsActivity extends AppCompatActivity {
     private boolean showRecycler = false;
     private boolean isDownloadCancelled = false;
     private String userEmail;
+    private MyDefectsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +125,10 @@ public class MyDefectsActivity extends AppCompatActivity {
         itemsDefect.clear();
         numberOfReportedDefects = 0;
         numberOfGottenDefects = 0;
+        if (adapter != null) {
+            adapter.clearData();
+            adapter = null;
+        }
 
     }
 
@@ -142,7 +152,7 @@ public class MyDefectsActivity extends AppCompatActivity {
 
 
     private void initDefectsRecycler(ArrayList<Defect2> reportedDefects) {
-        MyDefectsAdapter adapter = new MyDefectsAdapter(this, reportedDefects, new MyDefectsAdapter.OnItemClickListener() {
+        adapter = new MyDefectsAdapter(this, reportedDefects, new MyDefectsAdapter.OnItemClickListener() {
             @Override
             public void onDeleteItemClicked(String defectUuid, int haveImage, int haveAudio) {
                 // Delete from defect table in real time database.
@@ -179,6 +189,19 @@ public class MyDefectsActivity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+
+            @Override
+            public void onHoleItemClicked(String defectUuid, String defectEmail) {
+                Intent intent = new Intent(MyDefectsActivity.this, VoteDefectActivity.class);
+                intent.putExtra("uuid", defectUuid);
+                intent.putExtra("email", defectEmail);
+                someActivityResultLauncherForVote.launch(intent);
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
             }
         });
         binding.recyclerMyDefects.setAdapter(adapter);
@@ -297,5 +320,18 @@ public class MyDefectsActivity extends AppCompatActivity {
         }
 
     }
+
+    private ActivityResultLauncher<Intent> someActivityResultLauncherForVote = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK /* && result.getData() != null*/) {
+                        reload();
+
+                    }
+                }
+            }
+    );
 
 }

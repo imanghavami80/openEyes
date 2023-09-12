@@ -55,7 +55,7 @@ public class VoteDefectActivity extends AppCompatActivity implements View.OnClic
     private float rate = 0;
     private int likes = 0;
     private String howIsVoting = null;
-    MySharedPreferences sharedPreferences;
+    private MySharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +242,7 @@ public class VoteDefectActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void onSuccess(Void unused) {
                                 binding.constLayoutVoteDefectLoading.setVisibility(View.GONE);
+                                setResult(RESULT_OK);
                                 overridePendingTransition(
                                         R.anim.slide_in_left,
                                         R.anim.slide_out_right

@@ -22,10 +22,12 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
 
     private Context context;
     private ArrayList<Defect2> items;
+    private OnItemClickListener listener;
 
-    public ReportedDefectAdapter(Context context, ArrayList<Defect2> items) {
+    public ReportedDefectAdapter(Context context, ArrayList<Defect2> items, OnItemClickListener listener) {
         this.context = context;
         this.items = items;
+        this.listener = listener;
     }
 
     @NonNull
@@ -58,10 +60,7 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, VoteDefectActivity.class);
-                intent.putExtra("uuid", item.getUuid());
-                intent.putExtra("email", item.getEmail());
-                context.startActivity(intent);
+                listener.onHoleItemClicked(item.getUuid(), item.getEmail());
 
             }
         });
@@ -80,6 +79,16 @@ public class ReportedDefectAdapter extends RecyclerView.Adapter<ReportedDefectAd
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public interface OnItemClickListener {
+        void onHoleItemClicked(String defectUuid, String defectEmail);
+    }
+
+    public void clearData() {
+        this.items.clear();
+        notifyDataSetChanged();
+
     }
 
 }

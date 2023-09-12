@@ -56,10 +56,7 @@ public class MyDefectsAdapter extends RecyclerView.Adapter<MyDefectsAdapter.View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, VoteDefectActivity.class);
-                intent.putExtra("uuid", item.getUuid());
-                intent.putExtra("email", item.getEmail());
-                context.startActivity(intent);
+                listener.onHoleItemClicked(item.getUuid(), item.getEmail());
 
             }
         });
@@ -96,6 +93,7 @@ public class MyDefectsAdapter extends RecyclerView.Adapter<MyDefectsAdapter.View
 
     public interface OnItemClickListener {
         void onDeleteItemClicked(String defectUuid, int haveImage, int haveAudio);
+        void onHoleItemClicked(String defectUuid, String defectEmail);
     }
 
     private void showDeleteDialog(String defectUuid, int haveImage, int haveAudio) {
@@ -112,6 +110,12 @@ public class MyDefectsAdapter extends RecyclerView.Adapter<MyDefectsAdapter.View
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+    }
+
+    public void clearData() {
+        this.items.clear();
+        notifyDataSetChanged();
 
     }
 }

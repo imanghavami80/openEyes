@@ -16,6 +16,7 @@ import com.example.openeyes.databinding.ActivitySignUpBinding;
 import com.example.openeyes.model.User;
 import com.example.openeyes.utility.MySharedPreferences;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.example.openeyes.utility.UiHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -283,6 +284,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if (binding.checkBoxSignUp.isChecked()) {
                     // Set progress bar visible.
                     binding.constLayoutSignUpProgress.setVisibility(View.VISIBLE);
+
+                    // Closing the keyboard.
+                    UiHandler.keyboardDown(binding.edtSignUpEmail, SignUpActivity.this);
 
                     // Getting what user has entered.
                     String enteredFullName = Objects.requireNonNull(binding.edtSignUpName.getText()).toString().trim();

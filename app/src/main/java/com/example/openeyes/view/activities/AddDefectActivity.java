@@ -31,6 +31,7 @@ import com.example.openeyes.utility.Constants;
 import com.example.openeyes.utility.MySharedPreferences;
 import com.example.openeyes.utility.PermissionManager;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.example.openeyes.utility.UiHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -489,6 +490,9 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
             binding.constLayoutAddDefectUploading.setVisibility(View.VISIBLE);
             binding.btnAddDefect.setEnabled(true);
 
+            // Closing the keyboard.
+            UiHandler.keyboardDown(binding.edtAddDefectDescription, AddDefectActivity.this);
+
             // Get all defect information.
             String defectAddress = binding.edtAddDefectAddress.getText().toString().trim();
             String defectCategory = binding.autoTextAddDefectCategory.getText().toString().trim();
@@ -555,6 +559,14 @@ public class AddDefectActivity extends AppCompatActivity implements View.OnClick
                                                     }
                                                 });
                                             }
+                                        } else {
+                                            binding.constLayoutAddDefectUploading.setVisibility(View.GONE);
+                                            overridePendingTransition(
+                                                    R.anim.slide_in_left,
+                                                    R.anim.slide_out_right
+                                            );
+                                            finish();
+
                                         }
                                     } else {
                                         SnackBarHandler.snackBarHideAction(getApplicationContext(), binding.getRoot(), getString(R.string.error_occurred));

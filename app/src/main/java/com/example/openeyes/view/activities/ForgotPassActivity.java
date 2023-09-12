@@ -14,6 +14,7 @@ import android.view.View;
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivityForgotPassBinding;
 import com.example.openeyes.utility.SnackBarHandler;
+import com.example.openeyes.utility.UiHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
@@ -113,6 +114,9 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
         if (checkErrorEdtForgotPasswordEmail()) {
             // Set progress bar visible.
             binding.constLayoutForgotPasswordProgress.setVisibility(View.VISIBLE);
+
+            // Closing the keyboard.
+            UiHandler.keyboardDown(binding.edtForgotPasswordEmail, ForgotPassActivity.this);
 
             // Getting the entered email by user.
             String enteredEmail = binding.edtForgotPasswordEmail.getText().toString().trim();

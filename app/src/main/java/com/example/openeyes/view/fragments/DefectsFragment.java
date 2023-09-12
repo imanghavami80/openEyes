@@ -21,6 +21,7 @@ import com.example.openeyes.databinding.FragmentDefectsBinding;
 import com.example.openeyes.model.Defect2;
 import com.example.openeyes.utility.SnackBarHandler;
 import com.example.openeyes.view.activities.AddDefectActivity;
+import com.example.openeyes.view.activities.VoteDefectActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +46,7 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
     private int numberOfGottenDefects = 0;
     private boolean showRecycler = false;
     private boolean isDownloadCancelled = false;
+    private ReportedDefectAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,10 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
         itemsDefect.clear();
         numberOfReportedDefects = 0;
         numberOfGottenDefects = 0;
+        if (adapter != null) {
+            adapter.clearData();
+            adapter = null;
+        }
 
     }
 
@@ -129,7 +135,20 @@ public class DefectsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initDefectsRecycler(ArrayList<Defect2> reportedDefects) {
-        ReportedDefectAdapter adapter = new ReportedDefectAdapter(requireContext(), reportedDefects);
+        adapter = new ReportedDefectAdapter(requireContext(), reportedDefects, new ReportedDefectAdapter.OnItemClickListener() {
+            @Override
+            public void onHoleItemClicked(String defectUuid, String defectEmail) {
+                Intent intent = new Intent(requireContext(), VoteDefectActivity.class);
+                intent.putExtra("uuid", defectUuid);
+                intent.putExtra("email", defectEmail);
+                startActivity(intent);
+                requireActivity().overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
+            }
+        });
         binding.recyclerDefects.setAdapter(adapter);
         binding.recyclerDefects.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
