@@ -32,6 +32,9 @@
     <string name="forgot_password_hint_2">We will send you an email that will allow you to reset your password.</string>
     <string name="send_link">Send Link</string>
     <string name="reset">Reset</string>
+    <string name="exit_app_dialog">Do you want to exit the app?</string>
+    <string name="logout_dialog">Do you want to logout?</string>
+    <string name="delete_defect_dialog">Do you want to delete this defect?</string>
     <string name="reset_link_sent">The reset link has been sent to your email.</string>
     <string name="need_permission">Permission needed for this feature.</string>
     <string name="hide">HIDE</string>

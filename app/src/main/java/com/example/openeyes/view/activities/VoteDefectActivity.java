@@ -228,7 +228,7 @@ public class VoteDefectActivity extends AppCompatActivity implements View.OnClic
 
             }
         } else if (view.getId() == binding.btnVoteDefect.getId()) {
-            if (binding.ratingBarVoteDefect.getNumStars() != 0) {
+            if ((int) binding.ratingBarVoteDefect.getRating() != 0) {
                 binding.constLayoutVoteDefectLoading.setVisibility(View.VISIBLE);
                 Map<String, Object> updates = new HashMap<>();
                 rate = calculateRate(rate, likes, (int) binding.ratingBarVoteDefect.getRating());

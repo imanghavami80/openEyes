@@ -98,7 +98,7 @@ public class MyDefectsAdapter extends RecyclerView.Adapter<MyDefectsAdapter.View
 
     private void showDeleteDialog(String defectUuid, int haveImage, int haveAudio) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
-        builder.setMessage("Do you want to delete this defect?");
+        builder.setMessage(this.context.getString(R.string.delete_defect_dialog));
         builder.setCancelable(true);
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
             this.listener.onDeleteItemClicked(defectUuid, haveImage, haveAudio);

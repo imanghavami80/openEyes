@@ -97,7 +97,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void showLogoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setMessage("Do you want to logout?");
+        builder.setMessage(getString(R.string.logout_dialog));
         builder.setCancelable(true);
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
             sharedPreferences.clearAllData();
