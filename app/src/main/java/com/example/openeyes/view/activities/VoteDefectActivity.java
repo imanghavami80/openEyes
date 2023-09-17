@@ -205,6 +205,7 @@ public class VoteDefectActivity extends AppCompatActivity implements View.OnClic
         fDatabase.removeEventListener(valueEventListener1);
         fDatabase.removeEventListener(valueEventListener2);
         isDownloadCancelled = true;
+        imageList = new ArrayList<>();
 
     }
 

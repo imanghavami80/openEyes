@@ -21,4 +21,5 @@
     <color name="ripple_white">#33A1A9BC</color>
     <color name="black_60">#99000000</color>
     <color name="black_80">#CC000000</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

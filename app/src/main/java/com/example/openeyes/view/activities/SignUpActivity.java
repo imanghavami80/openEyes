@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.example.openeyes.R;
 import com.example.openeyes.databinding.ActivitySignUpBinding;
@@ -19,6 +20,7 @@ import com.example.openeyes.model.User;
 import com.example.openeyes.utility.MySharedPreferences;
 import com.example.openeyes.utility.SnackBarHandler;
 import com.example.openeyes.utility.UiHandler;
+import com.example.openeyes.view.fragments.BottomSheetRulesFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private MySharedPreferences mySharedPreferences;
     private ActivitySignUpBinding binding;
+    private String TAG = "BottomSheetReadRulesFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         binding.txtSignUpToSignIn2.setOnClickListener(this);
         binding.btnSignUp.setOnClickListener(this);
         binding.constLayoutSignUpProgress.setOnClickListener(null);
+
+        binding.checkBoxSignUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    BottomSheetRulesFragment bottomSheet = new BottomSheetRulesFragment();
+                    bottomSheet.show(getSupportFragmentManager(), TAG);
+
+                }
+            }
+        });
 
     }
 

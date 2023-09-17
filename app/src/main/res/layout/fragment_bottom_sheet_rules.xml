@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray4">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent=".8">
+
+                <View
+                    android:id="@+id/viewTopBottomSheet"
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:background="@color/blue_dark"
+                    app:layout_constraintBottom_toTopOf="@+id/txtTitleReadingPsalmsSheet"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".2" />
+
+                <TextView
+                    android:id="@+id/txtTitleReadingPsalmsSheet"
+                    style="@style/home_header"
+                    android:layout_width="0dp"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center"
+                    android:text="@string/terms_of_use"
+                    android:textColor="@color/blue_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/viewTopBottomSheet" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constTitle"
+                app:layout_constraintWidth_percent=".9">
+
+                <TextView
+                    android:id="@+id/txtReadingPsalmsSheet"
+                    style="@style/normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill"
+                    android:paddingBottom="@dimen/_50sdp"
+                    android:textColor="@color/blue_dark" />
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
